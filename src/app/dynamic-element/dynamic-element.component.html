@@ -1,0 +1,23 @@
+<div *ngIf="!element.type">
+  <p>Select an element type</p>
+</div>
+
+<div *ngIf="element.type === 'input'">
+  <mat-form-field>
+    <input
+      matInput
+      [placeholder]="element.header"
+      [required]="element.isMandatory"
+      name="{{ element.parameterName }}"
+      [(ngModel)]="element.value"
+    />
+  </mat-form-field>
+</div>
+
+<div *ngIf="element.type === 'select'"></div>
+
+<div *ngIf="element.type === 'datepicker'"></div>
+
+<div *ngIf="element.type === 'checkbox'"></div>
+
+<div *ngIf="element.type === 'search'"></div>

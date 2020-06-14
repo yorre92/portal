@@ -1,0 +1,99 @@
+<div class="container">
+  <div class="box">
+    <form action="" [formGroup]="form">
+      <mat-form-field>
+        <input
+          matInput
+          name="ParameterName"
+          placeholder="Parameter Name"
+          formControlName="parameterName"
+        />
+      </mat-form-field>
+
+      <mat-form-field>
+        <input
+          matInput
+          placeholder="Header"
+          name="Header"
+          formControlName="header"
+        />
+      </mat-form-field>
+
+      <mat-form-field>
+        <input
+          matInput
+          placeholder="Regex Pattern"
+          name="Regex"
+          formControlName="regex"
+        />
+      </mat-form-field>
+
+      <mat-form-field>
+        <input
+          matInput
+          name="RegexMessage"
+          placeholder="Regex Message"
+          formControlName="regexMessage"
+        />
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-select placeholder="Width" formControlName="width" name="Width">
+          <mat-option value="box-one">
+            1/4
+          </mat-option>
+
+          <mat-option value="box-two">
+            2/4
+          </mat-option>
+
+          <mat-option value="box-three">
+            3/4
+          </mat-option>
+
+          <mat-option value="box-four">
+            4/4
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <div>
+        <mat-checkbox name="IsMandatory" formControlName="isMandatory"
+          >Is Mandatory</mat-checkbox
+        >
+      </div>
+
+      <div>
+        <mat-checkbox name="IsDisabled" formControlName="isDisabled"
+          >Is Disabled</mat-checkbox
+        >
+      </div>
+      <div>
+        <mat-checkbox name="IsVisible" formControlName="isVisible"
+          >Is Visible</mat-checkbox
+        >
+      </div>
+    </form>
+  </div>
+  <div class="box">
+    <div class="form-container">
+      <div class="box border-box box-four">
+        <button mat-icon-button style="width: 100%;" (click)="add()">
+          <mat-icon>add</mat-icon>
+        </button>
+      </div>
+      <div
+        (click)="select(i)"
+        [ngClass]="{ selected: activeIndex === i }"
+        [class]="e.width"
+        *ngFor="let e of elements; let i = index"
+        class="box border-box"
+      >
+        <app-dynamic-element
+          style="width: 100%;"
+          [element]="e"
+        ></app-dynamic-element>
+      </div>
+    </div>
+  </div>
+</div>

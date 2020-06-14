@@ -1,0 +1,63 @@
+/* You can add global styles to this file, and also import other style files */
+
+:root {
+  --primary-color: rgb(94, 1, 94);
+  --secondary-color: rgb(163, 163, 163);
+  --bg-color: white;
+  --secondary-bg-color: rgb(233, 233, 233);
+  --success-color: rgb(1, 100, 1);
+  --warning-color: rgb(206, 206, 0);
+}
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  background-color: var(--bg-color);
+}
+
+.container {
+  width: 100%;
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: 1fr 1fr;
+}
+
+.box {
+  padding: 10px;
+}
+
+.border-box {
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14),
+    0 1px 5px 0 rgba(0, 0, 0, 0.12);
+}
+
+.form-container {
+  width: 100%;
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+
+.box-one {
+  grid-column: span 1 / auto;
+}
+
+.box-two {
+  grid-column: span 2 / auto;
+}
+
+.box-three {
+  grid-column: span 3 / auto;
+}
+
+.box-four {
+  grid-column: span 4 / auto;
+}
