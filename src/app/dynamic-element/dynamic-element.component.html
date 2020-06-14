@@ -8,16 +8,42 @@
       matInput
       [placeholder]="element.header"
       [required]="element.isMandatory"
-      name="{{ element.parameterName }}"
+      name="{{ element.parameterName }}_{{ element.type }}_{{ index }}"
       [(ngModel)]="element.value"
     />
   </mat-form-field>
 </div>
 
-<div *ngIf="element.type === 'select'"></div>
+<div *ngIf="element.type === 'select'">
+  <mat-form-field>
+    <mat-select
+      [placeholder]="element.header"
+      [(ngModel)]="element.value"
+      [required]="element.isMandatory"
+      name="{{ element.parameterName }}_{{ element.type }}_{{ index }}"
+    >
+      <mat-option *ngFor="let item of element.options" [value]="item.value">
+        {{ item.value }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
 
 <div *ngIf="element.type === 'datepicker'"></div>
 
-<div *ngIf="element.type === 'checkbox'"></div>
+<div *ngIf="element.type === 'checkbox'">
+  <mat-checkbox [(ngModel)]="element.value">{{ element.header }}</mat-checkbox>
+</div>
 
-<div *ngIf="element.type === 'search'"></div>
+<div *ngIf="element.type === 'search'">
+  <mat-form-field>
+    <input
+      matInput
+      [placeholder]="element.header"
+      [required]="element.isMandatory"
+      name="{{ element.parameterName }}_{{ element.type }}_{{ index }}"
+      [(ngModel)]="element.value"
+    />
+    <mat-icon matSuffix>search</mat-icon>
+  </mat-form-field>
+</div>

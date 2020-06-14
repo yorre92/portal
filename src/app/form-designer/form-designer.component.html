@@ -4,6 +4,7 @@
       <mat-form-field>
         <input
           matInput
+          required
           name="ParameterName"
           placeholder="Parameter Name"
           formControlName="parameterName"
@@ -11,10 +12,25 @@
       </mat-form-field>
 
       <mat-form-field>
+        <mat-select
+          placeholder="Type"
+          formControlName="type"
+          name="Type"
+          required
+        >
+          <mat-option value="">Choose an element type</mat-option>
+          <mat-option *ngFor="let t of types" [value]="t.value">
+            {{ t.value }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field>
         <input
           matInput
           placeholder="Header"
           name="Header"
+          required
           formControlName="header"
         />
       </mat-form-field>

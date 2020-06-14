@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  FormControl,
+  Validators,
+} from '@angular/forms';
 
 @Component({
   selector: 'app-form-designer',
@@ -13,13 +18,21 @@ export class FormDesignerComponent implements OnInit {
   activeIndex;
   elements = [];
 
+  types = [
+    { value: 'input', icon: 'input' },
+    { value: 'select', icon: 'view_list' },
+    { value: 'checkbox', icon: 'done_outline' },
+    { value: 'search', icon: 'search' },
+    { value: 'datepicker', icon: 'date_range' },
+  ];
+
   constructor(private fb: FormBuilder) {}
 
   ngOnInit(): void {
     this.form = this.fb.group({
-      parameterName: '',
-      header: '',
-      type: '',
+      parameterName: new FormControl('', Validators.required),
+      header: new FormControl('', Validators.required),
+      type: new FormControl('', Validators.required),
       regex: '',
       regexMessage: '',
       isMandatory: false,
@@ -34,7 +47,7 @@ export class FormDesignerComponent implements OnInit {
   }
 
   add() {
-    if (this.form.invalid) {
+    if (this.elements.length > 0 && this.form.invalid) {
       return;
     }
 

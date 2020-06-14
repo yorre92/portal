@@ -7,6 +7,7 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class DynamicElementComponent implements OnInit {
   @Input('element') element;
+  @Input('index') index;
 
   constructor() {}
 
