@@ -35,6 +35,10 @@ export class FormDesignerComponent implements OnInit {
       type: new FormControl('', Validators.required),
       regex: '',
       regexMessage: '',
+      options: this.fb.group({
+        name: '',
+        value: '',
+      }),
       isMandatory: false,
       isDisabled: false,
       isVisible: false,
@@ -48,6 +52,7 @@ export class FormDesignerComponent implements OnInit {
 
   add() {
     if (this.elements.length > 0 && this.form.invalid) {
+      this.form.markAllAsTouched();
       return;
     }
 
@@ -65,6 +70,35 @@ export class FormDesignerComponent implements OnInit {
 
     this.activeIndex = this.elements.length - 1;
     this.form.patchValue(this.elements[this.activeIndex]);
+    this.form.markAsUntouched();
+  }
+
+  moveUp(i) {
+    if (i > 0) {
+      let currentElement = this.elements[i];
+      let aboveElement = this.elements[i - 1];
+
+      this.elements[i] = aboveElement;
+      this.elements[i - 1] = currentElement;
+      this.activeIndex = i - 1;
+    }
+  }
+
+  moveDown(i) {
+    if (i < this.elements.length - 1) {
+      let currentElement = this.elements[i];
+      let aboveElement = this.elements[i + 1];
+
+      this.elements[i] = aboveElement;
+      this.elements[i + 1] = currentElement;
+      this.activeIndex = i + 1;
+    }
+  }
+
+  remove(i) {
+    this.elements.splice(i, 1);
+
+    if (this.activeIndex === i) this.activeIndex = null;
   }
 
   select(i) {

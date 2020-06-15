@@ -13,9 +13,12 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSelectModule } from '@angular/material/select';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
 
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { DynamicElementComponent } from './dynamic-element/dynamic-element.component';
+import { MatNativeDateModule } from '@angular/material/core';
 
 @NgModule({
   declarations: [AppComponent, FormDesignerComponent, DynamicElementComponent],
@@ -32,6 +35,9 @@ import { DynamicElementComponent } from './dynamic-element/dynamic-element.compo
     FormsModule,
     MatIconModule,
     MatButtonModule,
+    MatDatepickerModule,
+    MatButtonToggleModule,
+    MatNativeDateModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

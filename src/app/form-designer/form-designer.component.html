@@ -1,95 +1,103 @@
 <div class="container">
   <div class="box">
-    <form action="" [formGroup]="form">
-      <mat-form-field>
-        <input
-          matInput
-          required
-          name="ParameterName"
-          placeholder="Parameter Name"
-          formControlName="parameterName"
-        />
-      </mat-form-field>
+    <div *ngIf="activeIndex !== undefined">
+      <form action="" [formGroup]="form">
+        <div></div>
 
-      <mat-form-field>
-        <mat-select
-          placeholder="Type"
-          formControlName="type"
-          name="Type"
-          required
-        >
-          <mat-option value="">Choose an element type</mat-option>
-          <mat-option *ngFor="let t of types" [value]="t.value">
-            {{ t.value }}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
+        <mat-form-field>
+          <input
+            matInput
+            required
+            name="ParameterName"
+            placeholder="Parameter Name"
+            formControlName="parameterName"
+          />
+        </mat-form-field>
 
-      <mat-form-field>
-        <input
-          matInput
-          placeholder="Header"
-          name="Header"
-          required
-          formControlName="header"
-        />
-      </mat-form-field>
+        <mat-form-field>
+          <mat-select
+            placeholder="Type"
+            formControlName="type"
+            name="Type"
+            required
+          >
+            <mat-option value="">Choose an element type</mat-option>
+            <mat-option *ngFor="let t of types" [value]="t.value">
+              {{ t.value }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
 
-      <mat-form-field>
-        <input
-          matInput
-          placeholder="Regex Pattern"
-          name="Regex"
-          formControlName="regex"
-        />
-      </mat-form-field>
+        <mat-form-field>
+          <input
+            matInput
+            placeholder="Header"
+            name="Header"
+            required
+            formControlName="header"
+          />
+        </mat-form-field>
 
-      <mat-form-field>
-        <input
-          matInput
-          name="RegexMessage"
-          placeholder="Regex Message"
-          formControlName="regexMessage"
-        />
-      </mat-form-field>
+        <mat-form-field>
+          <input
+            matInput
+            placeholder="Regex Pattern"
+            name="Regex"
+            formControlName="regex"
+          />
+        </mat-form-field>
 
-      <mat-form-field>
-        <mat-select placeholder="Width" formControlName="width" name="Width">
-          <mat-option value="box-one">
-            1/4
-          </mat-option>
+        <mat-form-field>
+          <input
+            matInput
+            name="RegexMessage"
+            placeholder="Regex Message"
+            formControlName="regexMessage"
+          />
+        </mat-form-field>
 
-          <mat-option value="box-two">
-            2/4
-          </mat-option>
+        <mat-form-field>
+          <mat-select placeholder="Width" formControlName="width" name="Width">
+            <mat-option value="box-one">
+              1/4
+            </mat-option>
 
-          <mat-option value="box-three">
-            3/4
-          </mat-option>
+            <mat-option value="box-two">
+              2/4
+            </mat-option>
 
-          <mat-option value="box-four">
-            4/4
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
+            <mat-option value="box-three">
+              3/4
+            </mat-option>
 
-      <div>
-        <mat-checkbox name="IsMandatory" formControlName="isMandatory"
-          >Is Mandatory</mat-checkbox
-        >
-      </div>
+            <mat-option value="box-four">
+              4/4
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
 
-      <div>
-        <mat-checkbox name="IsDisabled" formControlName="isDisabled"
-          >Is Disabled</mat-checkbox
-        >
-      </div>
-      <div>
-        <mat-checkbox name="IsVisible" formControlName="isVisible"
-          >Is Visible</mat-checkbox
-        >
-      </div>
-    </form>
+        <div class="container">
+          <div>
+            <div>
+              <mat-checkbox name="IsMandatory" formControlName="isMandatory"
+                >Is Mandatory</mat-checkbox
+              >
+            </div>
+
+            <div>
+              <mat-checkbox name="IsDisabled" formControlName="isDisabled"
+                >Is Disabled</mat-checkbox
+              >
+            </div>
+            <div>
+              <mat-checkbox name="IsVisible" formControlName="isVisible"
+                >Is Visible</mat-checkbox
+              >
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
   </div>
   <div class="box">
     <div class="form-container">
@@ -105,10 +113,42 @@
         *ngFor="let e of elements; let i = index"
         class="box border-box"
       >
-        <app-dynamic-element
-          style="width: 100%;"
-          [element]="e"
-        ></app-dynamic-element>
+        <div class="element-box">
+          <div style="width: 100%;">
+            <app-dynamic-element
+              aria-disabled="100%"
+              style="width: 100%; cursor: pointer;"
+              [element]="e"
+            ></app-dynamic-element>
+          </div>
+
+          <div>
+            <div class="element-box">
+              <button
+                class="inline"
+                type="button"
+                mat-icon-button
+                (click)="moveUp(activeIndex)"
+              >
+                <mat-icon>arrow_circle_up</mat-icon>
+              </button>
+
+              <button
+                class="inline"
+                type="button"
+                mat-icon-button
+                (click)="moveDown(activeIndex)"
+              >
+                <mat-icon>arrow_circle_down</mat-icon>
+              </button>
+            </div>
+            <div>
+              <button mat-icon-button type="button" (click)="remove(i)">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
