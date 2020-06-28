@@ -15,13 +15,25 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatTableModule } from '@angular/material/table';
+import { MatCardModule } from '@angular/material/card';
 
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { DynamicElementComponent } from './dynamic-element/dynamic-element.component';
 import { MatNativeDateModule } from '@angular/material/core';
+import { AngularFireModule } from '@angular/fire';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { environment } from 'src/environments/environment';
+import { ServiceListComponent } from './service-list/service-list.component';
 
 @NgModule({
-  declarations: [AppComponent, FormDesignerComponent, DynamicElementComponent],
+  declarations: [
+    AppComponent,
+    FormDesignerComponent,
+    DynamicElementComponent,
+    ServiceListComponent,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -38,6 +50,11 @@ import { MatNativeDateModule } from '@angular/material/core';
     MatDatepickerModule,
     MatButtonToggleModule,
     MatNativeDateModule,
+    MatPaginatorModule,
+    MatCardModule,
+    MatTableModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFirestoreModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

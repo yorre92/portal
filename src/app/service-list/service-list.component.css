@@ -1,0 +1,10 @@
+.mat-card:hover {
+  cursor: pointer;
+  background-color: var(--gray1);
+}
+
+.pageing {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: center;
+}

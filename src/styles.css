@@ -1,23 +1,23 @@
 /* You can add global styles to this file, and also import other style files */
 
-:root {
+/* :root {
   --primary-color: rgb(94, 1, 94);
   --secondary-color: rgb(163, 163, 163);
   --bg-color: white;
   --secondary-bg-color: rgb(233, 233, 233);
   --success-color: rgb(1, 100, 1);
   --warning-color: rgb(206, 206, 0);
-}
+} */
 
 html,
 body {
   height: 100%;
 }
-body {
+/* body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
   background-color: var(--bg-color);
-}
+}  */
 
 .container {
   width: 100%;
@@ -60,4 +60,171 @@ body {
 
 .box-four {
   grid-column: span 4 / auto;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Montserrat", sans-serif;
+  color: var(--text);
+  background: var(--bg);
+  transition: background 500ms ease-in-out, color 1000ms ease-in-out;
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+a {
+  color: currentColor;
+  text-decoration: none;
+}
+
+header {
+  padding: 1em;
+  clip-path: polygon(50% 0%, 100% 0, 100% 65%, 50% 100%, 0 65%, 0 0);
+  background: var(--bg-nav);
+  margin-bottom: 1em;
+  padding-bottom: 3.5em;
+  text-align: center;
+}
+
+main {
+  min-height: 1000px;
+  padding: 2rem;
+}
+
+img {
+  margin: 2em 0 0;
+  width: 180px;
+  height: 180px;
+}
+
+/* Navbar */
+
+.navbar {
+  height: 70px;
+  width: 100%;
+  background: var(--bg-nav);
+  color: var(--text);
+}
+
+.navbar-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  height: 100%;
+}
+
+.nav-item {
+  cursor: pointer;
+  height: 100%;
+  width: 5rem;
+  display: flex;
+  justify-content: center;
+}
+
+.nav-item a {
+  line-height: 70px;
+}
+
+.dropdown {
+  margin-top: 70px;
+  width: 150px;
+  position: absolute;
+  opacity: 1;
+  z-index: 2;
+  background: var(--bg-dropdown);
+  border-top: 2px solid var(--border-color);
+  box-shadow: rgba(2, 8, 20, 0.1) 0px 0.175em 0.5em;
+}
+
+.dropdown-item {
+  padding: 2px;
+  display: flex;
+  justify-content: center;
+}
+
+.dropdown-item:hover {
+  cursor: pointer;
+  background: var(--gray1);
+}
+
+.dropdown-item a {
+  size: 0.7rem;
+  font-weight: bold;
+}
+
+.dropdown-item-theme a::before {
+  content: " ";
+  border: 2px solid var(--border-color);
+  border-radius: 50%;
+  width: 2rem;
+  height: 2rem;
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 10px;
+}
+
+/* Themes */
+
+:root {
+  --gray0: #f8f8f8;
+  --gray1: #dbe1e8;
+  --gray2: #b2becd;
+  --gray3: #6c7983;
+  --gray4: #454e56;
+  --gray5: #2a2e35;
+  --gray6: #12181b;
+  --blue: #0084a5;
+  --purple: #a82dd1;
+  --yellow: #fff565;
+}
+
+.light {
+  --bg: var(--gray0);
+  --bg-nav: linear-gradient(to right, var(--gray1), var(--gray3));
+  --bg-dropdown: var(--gray0);
+  --text: var(--gray6);
+  --border-color: var(--blue);
+  --bg-solar: var(--yellow);
+}
+
+.dark {
+  --bg: var(--gray5);
+  --bg-nav: linear-gradient(to right, var(--gray5), var(--gray6));
+  --bg-dropdown: var(--gray6);
+  --text: var(--gray0);
+  --border-color: var(--purple);
+  --bg-solar: var(--blue);
+}
+
+.solar {
+  --gray0: #fbffd4;
+  --gray1: #f7f8d0;
+  --gray2: #b6f880;
+  --gray3: #5ec72d;
+  --gray4: #3ea565;
+  --gray5: #005368;
+  --gray6: #003d4c;
+}
+
+#dark::before {
+  background: #2a2e35;
+}
+
+#light::before {
+  background: #ffffff;
+}
+
+#solar::before {
+  background: var(--bg-solar);
+}
+
+.main {
+  padding-left: 2rem;
+  padding-right: 2rem;
+  padding-top: 1rem;
 }

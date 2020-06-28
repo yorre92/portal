@@ -1,1 +1,80 @@
-<router-outlet></router-outlet>
+<nav class="navbar">
+  <ul class="navbar-nav">
+    <li
+      *ngFor="let item of menu"
+      class="nav-item"
+      (mouseleave)="closeDropdown(item)"
+      (mouseover)="openDropdown(item)"
+      [ngClass]="{ 'has-dropdown': item.children }"
+    >
+      <ng-container *ngIf="item.link">
+        <a [routerLink]="[item.link]">{{ item.name }}</a>
+      </ng-container>
+
+      <ng-container *ngIf="!item.link && item.children">
+        <a href="#">{{ item.name }}</a>
+      </ng-container>
+
+      <ng-container *ngIf="item.openDropdown">
+        <ul class="dropdown">
+          <li *ngFor="let child of item.children" class="dropdown-item">
+            <a [routerLink]="[child.link]">{{ child.name }}</a>
+          </li>
+        </ul>
+      </ng-container>
+    </li>
+  </ul>
+
+  <!-- <ul class="navbar-nav">
+    <li class="nav-item">Home</li>
+    <li class="nav-item">About</li>
+
+    <li class="nav-item has-dropdown">
+      <a (mouseover)="openDropdown($event)" href="#" onclick="return false;"
+        >Settings</a
+      >
+      <ul  class="dropdown">
+        <li class="dropdown-item">
+          <a
+            (click)="onDropdownNavigate($event)"
+            [routerLink]="['/form-designer']"
+            >Forms</a
+          >
+        </li>
+        <li class="dropdown-item">
+          <a (click)="onDropdownNavigate($event)" href="#">Services</a>
+        </li>
+        <li class="dropdown-item">
+          <a (click)="onDropdownNavigate($event)" href="#">Menu</a>
+        </li>
+        <li class="dropdown-item">
+          <a (click)="onDropdownNavigate($event)" href="#">Menu</a>
+        </li>
+
+        <li class="dropdown-item">
+          <a (click)="onDropdownNavigate($event)" href="#">Menu</a>
+        </li>
+      </ul>
+    </li>
+
+    <li class="nav-item has-dropdown">
+      <a href="#" onclick="return false;">Theme</a>
+      <ul class="dropdown">
+        <li class="dropdown-item dropdown-item-theme">
+          <a id="light" href="#">light</a>
+        </li>
+        <li class="dropdown-item dropdown-item-theme">
+          <a id="dark" href="#">dark</a>
+        </li>
+        <li class="dropdown-item dropdown-item-theme">
+          <a id="solar" href="#">solarize</a>
+        </li>
+      </ul>
+    </li>
+
+    <li class="nav-item">Login</li>
+  </ul> -->
+</nav>
+<div class="main">
+  <router-outlet></router-outlet>
+</div>

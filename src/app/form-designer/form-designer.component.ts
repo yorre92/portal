@@ -5,6 +5,7 @@ import {
   FormControl,
   Validators,
 } from '@angular/forms';
+import { AngularFirestore } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-form-designer',
@@ -26,9 +27,11 @@ export class FormDesignerComponent implements OnInit {
     { value: 'datepicker', icon: 'date_range' },
   ];
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder, private firestore: AngularFirestore) {}
 
   ngOnInit(): void {
+    // this.firestore.collection('forms').valueChanges();
+
     this.form = this.fb.group({
       parameterName: new FormControl('', Validators.required),
       header: new FormControl('', Validators.required),

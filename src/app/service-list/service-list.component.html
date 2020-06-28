@@ -1,0 +1,16 @@
+<mat-card *ngFor="let s of services">
+  <mat-card-header>
+    <mat-card-title>{{ s.name }}</mat-card-title>
+    <mat-card-subtitle>{{ s.description }}</mat-card-subtitle>
+  </mat-card-header>
+</mat-card>
+<div class="pageing" style="margin-top: 1rem;">
+  <button mat-icon-button (click)="previous()">
+    <mat-icon>chevron_left</mat-icon>
+  </button>
+  <button mat-icon-button (click)="next()">
+    <mat-icon>chevron_right</mat-icon>
+  </button>
+
+  count: {{ totalCount }}
+</div>

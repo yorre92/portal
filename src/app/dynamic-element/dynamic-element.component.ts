@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { AngularFirestore } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-dynamic-element',
@@ -9,7 +10,9 @@ export class DynamicElementComponent implements OnInit {
   @Input('element') element;
   @Input('index') index;
 
-  constructor() {}
+  constructor(private firestore: AngularFirestore) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    var services = this.firestore.collection('services').valueChanges();
+  }
 }

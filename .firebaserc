@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "portal-7c56f": {
+      "hosting": {
+        "portal": [
+          "portal-7c56f"
+        ]
+      }
+    }
+  }
+}
