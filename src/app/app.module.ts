@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -18,7 +18,9 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
 import { MatCardModule } from '@angular/material/card';
-
+import { MatTreeModule } from '@angular/material/tree';
+import { MatMenuModule } from '@angular/material/menu';
+import { CdkTreeModule } from '@angular/cdk/tree';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { DynamicElementComponent } from './dynamic-element/dynamic-element.component';
 import { MatNativeDateModule } from '@angular/material/core';
@@ -26,6 +28,11 @@ import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { environment } from 'src/environments/environment';
 import { ServiceListComponent } from './service-list/service-list.component';
+import { ServiceFormComponent } from './service-form/service-form.component';
+import { MenuComponent } from './menu/menu.component';
+import { MenuDesignerComponent } from './menu-designer/menu-designer.component';
+import { ThemeComponent } from './theme/theme.component';
+import { LanguageEditorComponent } from './language-editor/language-editor.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +40,11 @@ import { ServiceListComponent } from './service-list/service-list.component';
     FormDesignerComponent,
     DynamicElementComponent,
     ServiceListComponent,
+    ServiceFormComponent,
+    MenuComponent,
+    MenuDesignerComponent,
+    ThemeComponent,
+    LanguageEditorComponent,
   ],
   imports: [
     BrowserModule,
@@ -53,8 +65,30 @@ import { ServiceListComponent } from './service-list/service-list.component';
     MatPaginatorModule,
     MatCardModule,
     MatTableModule,
+    CdkTreeModule,
+    MatTreeModule,
+    MatMenuModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
+  ],
+  exports: [
+    MatInputModule,
+    MatFormFieldModule,
+    MatSliderModule,
+    MatCheckboxModule,
+    MatSelectModule,
+    CdkTreeModule,
+    MatIconModule,
+    MatButtonModule,
+    MatDatepickerModule,
+    MatButtonToggleModule,
+    MatNativeDateModule,
+    MatPaginatorModule,
+    MatCardModule,
+    MatTableModule,
+    CdkTreeModule,
+    MatTreeModule,
+    MatMenuModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

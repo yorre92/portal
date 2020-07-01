@@ -1,9 +1,13 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { AngularFirestore } from '@angular/fire/firestore';
+import {
+  AngularFirestore,
+  AngularFirestoreCollection,
+} from '@angular/fire/firestore';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { Observable } from 'rxjs/internal/Observable';
 import { nextTick } from 'process';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-service-list',
@@ -13,39 +17,84 @@ import { nextTick } from 'process';
 export class ServiceListComponent implements OnInit {
   services: Service[];
   tag = 'admin';
-  currentPage = 0;
+  currentPage = 1;
   totalCount = 0;
+  pageSize = 10;
+  orderBy = 'name';
   lastVisible;
-  previousLastVisible;
+  firstVisible;
+  direction = 'right';
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
-  constructor(private firestore: AngularFirestore) {}
+  constructor(private firestore: AngularFirestore, private router: Router) {}
 
   ngOnInit(): void {
-    this.getServices(0);
+    this.getServices(this.currentPage);
+    // for (let index = 0; index < 30; index++) {
+    //   this.firestore
+    //     .collection<Service>('services')
+    //     .add({
+    //       cost: 1,
+    //       currency: 'kr',
+    //       description: 'a service',
+    //       elements: '[]',
+    //       hasManagerApproval: true,
+    //       hasSystemApproval: true,
+    //       name: 'service' + (1).toString(),
+    //       tags: ['admin'],
+    //       tenantId: 1,
+    //       thumbnail: '',
+    //     })
+    //     .then(() => console.log('success!'))
+    //     .catch((err) => console.log(err));
+    // }
+  }
+
+  details(s: Service) {
+    console.log(s);
+    this.router.navigate(['services', s.id]);
   }
 
   getServices(page) {
-    let query = null;
+    let query: AngularFirestoreCollection<Service> = null;
 
-    query = this.firestore.collection<Service>('services', (ref) =>
-      ref
-        .orderBy('createdAt', 'desc')
-        .where('tags', 'array-contains', this.tag)
-        .startAfter(
-          page > this.currentPage ? this.previousLastVisible : this.lastVisible
-        )
-        .limit(10)
-    );
+    if (page === 1) {
+      query = this.firestore.collection<Service>('services', (ref) =>
+        ref
+          .where('tags', 'array-contains', this.tag)
+          .orderBy(this.orderBy)
+          .limit(this.pageSize)
+      );
+    } else if (this.direction === 'right' && this.totalCount <= this.pageSize) {
+      query = this.firestore.collection<Service>('services', (ref) =>
+        ref
+          .where('tags', 'array-contains', this.tag)
+          .orderBy(this.orderBy)
+          .startAfter(this.lastVisible)
+          .limit(this.pageSize)
+      );
+    } else if (this.direction === 'left' && page > 1) {
+      query = this.firestore.collection<Service>('services', (ref) =>
+        ref
+          .where('tags', 'array-contains', this.tag)
+          .orderBy(this.orderBy)
+          .endBefore(this.firstVisible)
+          .limitToLast(this.pageSize)
+      );
+    }
 
     query.get().subscribe((querySnapshot) => {
-      this.previousLastVisible = this.lastVisible;
       this.lastVisible = querySnapshot.docs[querySnapshot.docs.length - 1];
+      this.firstVisible = querySnapshot.docs[0];
 
       this.totalCount = querySnapshot.size;
+      console.log(querySnapshot, this.currentPage);
+      let data = [];
+
       querySnapshot.forEach((doc) => {
-        let data = [];
-        data.push(doc.data());
+        let service = doc.data();
+        service.id = doc.id;
+        data.push(service);
 
         this.services = data;
       });
@@ -53,15 +102,24 @@ export class ServiceListComponent implements OnInit {
   }
 
   next() {
+    this.direction = 'right';
     this.getServices(this.currentPage + 1);
+    this.currentPage += 1;
   }
 
   previous() {
+    if (this.currentPage <= 1) {
+      return;
+    }
+
+    this.direction = 'left';
     this.getServices(this.currentPage - 1);
+    this.currentPage -= 1;
   }
 }
 
 export interface Service {
+  id: string;
   cost: number;
   currency: string;
   description: string;

@@ -1,0 +1,13 @@
+<div *ngIf="menu" class="menu-container" [@easeIn]="menu.length">
+  <div class="menu-card" *ngFor="let tile of menu; let i = index">
+    <div class="menu-card-header">
+      <h3>{{ tile.name }}</h3>
+    </div>
+    <div class="menu-card-body">
+      <mat-icon>group_add</mat-icon>
+    </div>
+    <div class="menu-card-description">
+      <p>{{ tile.description }}</p>
+    </div>
+  </div>
+</div>

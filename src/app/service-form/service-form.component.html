@@ -1,0 +1,28 @@
+<form [formGroup]="form">
+  <mat-form-field>
+    <input matInput placeholder="Name" required formControlName="name" />
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput placeholder="Description" formControlName="description" />
+  </mat-form-field>
+
+  <mat-form-field>
+    <input matInput type="number" placeholder="Cost" formControlName="cost" />
+  </mat-form-field>
+
+  <mat-form-field>
+    <input
+      matInput
+      type="text"
+      placeholder="Currency"
+      formControlName="currency"
+    />
+  </mat-form-field>
+
+  <mat-checkbox formControlName="hasManagerApproval"
+    >Manager Approval</mat-checkbox
+  >
+  <mat-checkbox formControlName="hasSystemApproval"
+    >System Approval</mat-checkbox
+  >
+</form>

@@ -1,0 +1,45 @@
+.menu-card {
+  padding: 10px;
+  box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2),
+    0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
+  margin-bottom: 5px;
+  border-radius: 5px;
+  background-color: var(--bg-secondary);
+}
+
+.menu-card:hover {
+  opacity: 0.7;
+  cursor: pointer;
+}
+
+.menu-container {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+
+.menu-card-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.menu-card-body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.menu-card-description {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.icon-container {
+  background-color: var(--bg);
+}
+
+.mat-icon {
+  font-size: 80px;
+  width: 84px;
+  height: 84px;
+}

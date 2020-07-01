@@ -1,0 +1,59 @@
+.example-tree-invisible {
+  display: none;
+}
+
+.example-tree ul,
+.example-tree li {
+  margin-top: 0;
+  margin-bottom: 0;
+  list-style-type: none;
+}
+
+.example-tree ul {
+  padding-left: 40px;
+}
+
+.mat-tree {
+  background: none;
+}
+
+.node-wrapper {
+  border-radius: 5px;
+  padding-left: 8px;
+  padding: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 140px;
+  height: 30px;
+  font-weight: 500;
+  background-color: var(--bg-secondary);
+  color: var(--text);
+}
+
+.node-wrapper:hover {
+  background-color: var(--hover);
+  cursor: pointer;
+}
+
+.node-wrapper.active {
+  background-color: var(--hover);
+}
+
+.arrow-button {
+  opacity: 0.1;
+}
+
+.arrow-button.active {
+  opacity: 1;
+}
+
+.mat-form-field {
+  width: 100%;
+}
+
+.node-header {
+  margin-bottom: 1rem;
+  display: flex;
+  justify-content: space-between;
+}

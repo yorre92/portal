@@ -10,9 +10,8 @@ export class DynamicElementComponent implements OnInit {
   @Input('element') element;
   @Input('index') index;
 
-  constructor(private firestore: AngularFirestore) {}
+  constructor() {}
 
   ngOnInit(): void {
-    var services = this.firestore.collection('services').valueChanges();
   }
 }
