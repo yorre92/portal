@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -6,6 +6,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { AngularFirestore } from '@angular/fire/firestore';
+import { debounceTime } from 'rxjs/operators';
 
 @Component({
   selector: 'app-form-designer',
@@ -17,7 +18,9 @@ export class FormDesignerComponent implements OnInit {
 
   activeElement;
   activeIndex;
-  elements = [];
+  @Output('formState') formState = new EventEmitter();
+  @Output('formValue') formValue = new EventEmitter();
+  @Input('elements') elements: any[];
 
   types = [
     { value: 'input', icon: 'input' },
@@ -30,8 +33,6 @@ export class FormDesignerComponent implements OnInit {
   constructor(private fb: FormBuilder, private firestore: AngularFirestore) {}
 
   ngOnInit(): void {
-    // this.firestore.collection('forms').valueChanges();
-
     this.form = this.fb.group({
       parameterName: new FormControl('', Validators.required),
       header: new FormControl('', Validators.required),
@@ -48,12 +49,26 @@ export class FormDesignerComponent implements OnInit {
       width: 'box-four',
     });
 
+    if (this.elements && this.elements.length > 0) {
+      this.select(0);
+    }
+
     this.form.valueChanges.subscribe(
       (res) => (this.elements[this.activeIndex] = res)
     );
+
+    this.form.statusChanges.pipe(debounceTime(200)).subscribe((res) => {
+      this.formState.emit(res);
+
+      if (res === 'VALID') {
+        this.formValue.emit(this.form.value);
+      }
+    });
   }
 
   add() {
+    if (!this.elements) this.elements = [];
+
     if (this.elements.length > 0 && this.form.invalid) {
       this.form.markAllAsTouched();
       return;
@@ -101,7 +116,12 @@ export class FormDesignerComponent implements OnInit {
   remove(i) {
     this.elements.splice(i, 1);
 
-    if (this.activeIndex === i) this.activeIndex = null;
+    if (this.elements.length > 0) {
+      this.select(this.elements.length - 1);
+    } else {
+      this.activeIndex = undefined;
+      this.form.reset();
+    }
   }
 
   select(i) {

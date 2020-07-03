@@ -1,44 +1,58 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {
   AngularFirestore,
   AngularFirestoreCollection,
 } from '@angular/fire/firestore';
-import { MatPaginator, PageEvent } from '@angular/material/paginator';
-import { MatTableDataSource } from '@angular/material/table';
-import { Observable } from 'rxjs/internal/Observable';
-import { nextTick } from 'process';
-import { Router } from '@angular/router';
-import { slideFromBottom } from '../animations/animations';
+import { Service } from '../service-list/service-list.component';
 import { finalize } from 'rxjs/operators';
+import { easeIn } from '../animations/animations';
+import { MatDialog } from '@angular/material/dialog';
+import { OrderServiceDialogComponent } from '../order-service-dialog/order-service-dialog.component';
+import {
+  SimpleSnackBar,
+  MatSnackBar,
+  MatSnackBarConfig,
+} from '@angular/material/snack-bar';
 
 @Component({
-  selector: 'app-service-list',
-  templateUrl: './service-list.component.html',
-  animations: [slideFromBottom()],
-  styleUrls: ['./service-list.component.css'],
+  selector: 'app-order-service-list',
+  templateUrl: './order-service-list.component.html',
+  animations: [easeIn()],
+  styleUrls: ['./order-service-list.component.css'],
 })
-export class ServiceListComponent implements OnInit {
-  services: Service[];
-  tag = 'admin';
-  currentPage = 1;
-  totalCount = 0;
-  pageSize = 10;
+export class OrderServiceListComponent implements OnInit {
+  services;
+  isLoading = false;
   orderBy = 'name';
+  pageSize = 5;
+  direction = 'right';
+  totalCount;
   lastVisible;
   firstVisible;
-  direction = 'right';
-  isLoading = false;
+  currentPage = 1;
 
-  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
-  constructor(private firestore: AngularFirestore, private router: Router) {}
+  constructor(
+    private firestore: AngularFirestore,
+    private dialog: MatDialog,
+    private snackBar: MatSnackBar
+  ) {}
 
   ngOnInit(): void {
-    this.getServices(this.currentPage);
+    this.getServices(1);
   }
 
-  details(s: Service) {
-    if (s) this.router.navigate(['services', s.id]);
-    else this.router.navigate(['services', '']);
+  openDialog(service: Service) {
+    const dialogRef = this.dialog.open(OrderServiceDialogComponent, {
+      data: { service: service },
+      width: '800px',
+    });
+
+    dialogRef.afterClosed().subscribe((res) => {
+      if (res)
+        this.snackBar.open(service.name, 'Ordered', <MatSnackBarConfig>{
+          duration: 2000,
+        });
+    });
   }
 
   getServices(page) {
@@ -100,18 +114,4 @@ export class ServiceListComponent implements OnInit {
     this.getServices(this.currentPage - 1);
     this.currentPage -= 1;
   }
-}
-
-export interface Service {
-  id: string;
-  cost: number;
-  currency: string;
-  description: string;
-  elements: string;
-  hasManagerApproval: boolean;
-  hasSystemApproval: boolean;
-  name: string;
-  tags: string[];
-  tenantId: number;
-  thumbnail: string;
 }

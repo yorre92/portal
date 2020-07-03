@@ -1,0 +1,21 @@
+<h2 mat-dialog-title>{{ service.name }}</h2>
+<mat-dialog-content>
+  {{ service.description }}
+
+  <app-order-service-form
+    [elements]="elements"
+    (formState)="updateFormState($event)"
+  ></app-order-service-form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button
+    mat-raised-button
+    color="primary"
+    [mat-dialog-close]="true"
+    [disabled]="!state || state === 'INVALID'"
+    cdkFocusInitial
+  >
+    Order
+  </button>
+</mat-dialog-actions>

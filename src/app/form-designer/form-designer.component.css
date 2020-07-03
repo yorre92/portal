@@ -3,7 +3,7 @@
 }
 
 .selected {
-  background-color: rgb(240, 240, 240);
+  background-color: var(--bg-secondary);
 }
 
 .element-box {
@@ -14,4 +14,21 @@
 
 .inline {
   display: inline;
+}
+
+.element-header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.border-box {
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px dashed var(--bg-secondary);
+}
+
+.border-box:hover {
+  cursor: pointer;
 }

@@ -1,28 +1,91 @@
-<form [formGroup]="form">
-  <mat-form-field>
-    <input matInput placeholder="Name" required formControlName="name" />
-  </mat-form-field>
-  <mat-form-field>
-    <input matInput placeholder="Description" formControlName="description" />
-  </mat-form-field>
+<div @routerTransition>
+  <div class="page-header">
+    <h2>Service</h2>
+  </div>
+  <form [formGroup]="form">
+    <mat-form-field>
+      <input matInput placeholder="Name" required formControlName="name" />
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="Description" formControlName="description" />
+    </mat-form-field>
 
-  <mat-form-field>
-    <input matInput type="number" placeholder="Cost" formControlName="cost" />
-  </mat-form-field>
+    <mat-form-field>
+      <input matInput type="number" placeholder="Cost" formControlName="cost" />
+    </mat-form-field>
 
-  <mat-form-field>
-    <input
-      matInput
-      type="text"
-      placeholder="Currency"
-      formControlName="currency"
-    />
-  </mat-form-field>
+    <mat-form-field>
+      <input
+        matInput
+        type="text"
+        placeholder="Currency"
+        formControlName="currency"
+      />
+    </mat-form-field>
 
-  <mat-checkbox formControlName="hasManagerApproval"
-    >Manager Approval</mat-checkbox
-  >
-  <mat-checkbox formControlName="hasSystemApproval"
-    >System Approval</mat-checkbox
-  >
-</form>
+    <mat-checkbox formControlName="hasManagerApproval"
+      >Manager Approval</mat-checkbox
+    >
+    <mat-checkbox formControlName="hasSystemApproval"
+      >System Approval</mat-checkbox
+    >
+
+    <div>
+      <mat-form-field>
+        <input
+          matInput
+          placeholder="Tags"
+          [(ngModel)]="tag"
+          [ngModelOptions]="{ standalone: true }"
+        />
+      </mat-form-field>
+      <button mat-icon-button type="button" (click)="addTag()">
+        <mat-icon>add</mat-icon>
+      </button>
+      <div style="padding-left: 8px;">
+        <mat-chip-list>
+          <mat-chip
+            *ngFor="let t of tags.value; let i = index"
+            [selectable]="true"
+            [removable]="true"
+            (removed)="removeTag(i)"
+            >{{ t }}
+
+            <mat-icon matChipRemove>cancel</mat-icon></mat-chip
+          >
+        </mat-chip-list>
+      </div>
+    </div>
+
+    <div class="page-header">
+      <h3>Form</h3>
+      <p>Create your form here</p>
+    </div>
+
+    <div *ngIf="elements">
+      <app-form-designer
+        [elements]="elements"
+        (formValue)="updateFormValue($event)"
+        (formState)="elementFormState($event)"
+      ></app-form-designer>
+    </div>
+
+    <hr />
+    <div class="page-footer">
+      <div>
+        <button mat-raised-button>Back</button>
+      </div>
+      <div></div>
+      <div>
+        <button
+          mat-raised-button
+          color="primary"
+          [disabled]="form.invalid"
+          (click)="save()"
+        >
+          {{ id ? "Save" : "Create" }}
+        </button>
+      </div>
+    </div>
+  </form>
+</div>

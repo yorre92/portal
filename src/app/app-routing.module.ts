@@ -6,6 +6,7 @@ import { MenuDesignerComponent } from './menu-designer/menu-designer.component';
 import { ThemeComponent } from './theme/theme.component';
 import { ServiceFormComponent } from './service-form/service-form.component';
 import { MenuComponent } from './menu/menu.component';
+import { OrderServiceListComponent } from './order-service-list/order-service-list.component';
 
 const routes: Routes = [
   { path: 'form-designer', component: FormDesignerComponent },
@@ -13,6 +14,7 @@ const routes: Routes = [
   { path: 'services/:id', component: ServiceFormComponent },
   { path: 'menu-designer', component: MenuDesignerComponent },
   { path: 'theme', component: ThemeComponent },
+  { path: 'order', component: OrderServiceListComponent },
   { path: '', component: MenuComponent },
 ];
 

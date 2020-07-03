@@ -1,10 +1,10 @@
-<div>
+<div @routerTransition>
   <div class="list-header">
     <h2>Menu</h2>
   </div>
   <div class="container">
     <div class="box">
-      <div style="margin: 20px;">
+      <div *ngIf="!isLoading" style="margin: 20px;">
         <button
           mat-raised-button
           color="primary"
@@ -67,6 +67,9 @@
             </li>
           </mat-nested-tree-node>
         </mat-tree>
+      </div>
+      <div class="spinner-container" *ngIf="isLoading">
+        <mat-spinner [diameter]="60"> </mat-spinner>
       </div>
     </div>
     <div class="box">
@@ -139,13 +142,17 @@
   </div>
   <hr />
   <div class="page-footer">
-    <button
-      mat-raised-button
-      color="primary"
-      [disabled]="form.invalid"
-      (click)="save()"
-    >
-      Save
-    </button>
+    <div></div>
+    <div></div>
+    <div>
+      <button
+        mat-raised-button
+        color="primary"
+        [disabled]="form.invalid"
+        (click)="save()"
+      >
+        Save
+      </button>
+    </div>
   </div>
 </div>

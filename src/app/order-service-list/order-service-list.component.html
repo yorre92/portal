@@ -1,0 +1,21 @@
+<div *ngIf="services" class="card-container" [@easeIn]="services.length">
+  <mat-card
+    (click)="openDialog(service)"
+    *ngFor="let service of services; let i = index"
+  >
+    <mat-card-header>
+      <mat-card-title>{{ service.name }}</mat-card-title>
+    </mat-card-header>
+    <img
+      mat-card-image
+      src="https://material.angular.io/assets/img/examples/shiba2.jpg"
+      alt="Photo of a Shiba Inu"
+    />
+    <mat-card-content>
+      <p>
+        {{ service.description }}
+      </p>
+    </mat-card-content>
+    <div *ngIf="service.cost">{{ service.cost }} {{ service.currency }}</div>
+  </mat-card>
+</div>

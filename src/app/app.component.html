@@ -7,7 +7,7 @@
       (mouseover)="openDropdown(item)"
       [ngClass]="{ 'has-dropdown': item.children }"
     >
-      <ng-container *ngIf="item.link">
+      <ng-container *ngIf="!item.children">
         <a [routerLink]="[item.link]">{{ item.name }}</a>
       </ng-container>
 

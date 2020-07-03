@@ -1,0 +1,82 @@
+<form #form="ngForm">
+  <div class="form-container" style="margin-top: 1rem;">
+    <div
+      [class]="element.width"
+      *ngFor="let element of elements; let i = index"
+    >
+      <ng-container *ngIf="element.type === 'input'">
+        <mat-form-field>
+          <input
+            [disabled]="element.isDisabled"
+            matInput
+            [placeholder]="element.header"
+            [required]="element.isMandatory"
+            name="{{ element.parameterName }}_{{ element.type }}_{{ i }}"
+            [(ngModel)]="element.value"
+          />
+        </mat-form-field>
+      </ng-container>
+
+      <ng-container *ngIf="element.type === 'select'">
+        <mat-form-field>
+          <mat-select
+            [disabled]="element.isDisabled"
+            [placeholder]="element.header"
+            [(ngModel)]="element.value"
+            [required]="element.isMandatory"
+            name="{{ element.parameterName }}_{{ element.type }}_{{ i }}"
+          >
+            <mat-option
+              *ngFor="let item of element.options"
+              [value]="item.value"
+            >
+              {{ item.value }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </ng-container>
+
+      <ng-container *ngIf="element.type === 'datepicker'">
+        <mat-form-field>
+          <mat-label>{{ element.header }}</mat-label>
+          <input
+            [disabled]="element.isDisabled"
+            matInput
+            [matDatepicker]="picker"
+            [(ngModel)]="element.value"
+            name="{{ element.parameterName }}_{{ element.type }}_{{ i }}"
+            [placeholder]="element.header"
+          />
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="picker"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+      </ng-container>
+
+      <ng-container *ngIf="element.type === 'checkbox'">
+        <mat-checkbox
+          [disabled]="element.isDisabled"
+          [(ngModel)]="element.value"
+          name="{{ element.parameterName }}_{{ element.type }}_{{ i }}"
+          >{{ element.header }}</mat-checkbox
+        >
+      </ng-container>
+
+      <ng-container *ngIf="element.type === 'search'">
+        <mat-form-field>
+          <input
+            [disabled]="element.isDisabled"
+            matInput
+            [placeholder]="element.header"
+            [required]="element.isMandatory"
+            name="{{ element.parameterName }}_{{ element.type }}_{{ i }}"
+            [(ngModel)]="element.value"
+          />
+          <mat-icon matSuffix>search</mat-icon>
+        </mat-form-field>
+      </ng-container>
+    </div>
+  </div>
+</form>

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { easeIn } from '../animations/animations';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-menu',
@@ -9,9 +10,10 @@ import { easeIn } from '../animations/animations';
   styleUrls: ['./menu.component.css'],
 })
 export class MenuComponent implements OnInit {
+  tiles;
   menu;
   level;
-  constructor(private firestore: AngularFirestore) {}
+  constructor(private firestore: AngularFirestore, private router: Router) {}
 
   ngOnInit(): void {
     this.firestore
@@ -21,14 +23,16 @@ export class MenuComponent implements OnInit {
         r.forEach((menu) => {
           console.log(menu);
           this.menu = JSON.parse(menu.data().menuJson);
+          this.tiles = this.menu;
         });
       });
   }
 
   navigate(tile) {
     if (tile.items && tile.items.length > 0) {
-      this.firestore.collection('');
+      this.tiles = tile.items;
     } else {
+      this.router.navigate([tile.route]);
     }
   }
 

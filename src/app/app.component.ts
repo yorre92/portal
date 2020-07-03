@@ -11,6 +11,11 @@ export class AppComponent {
 
   menu: MenuItem[] = [
     {
+      name: 'Home',
+      link: '',
+      children: null,
+    },
+    {
       name: 'Settings',
       link: '',
       children: [{ name: 'Test', link: '/form-designer', children: null }],

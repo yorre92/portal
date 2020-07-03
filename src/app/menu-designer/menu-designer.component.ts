@@ -12,10 +12,13 @@ import {
 import * as _ from 'lodash';
 import { from } from 'rxjs';
 import { AngularFirestore } from '@angular/fire/firestore';
+import { slideFromBottom } from '../animations/animations';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-menu-designer',
   templateUrl: './menu-designer.component.html',
+  animations: [slideFromBottom()],
   styleUrls: ['./menu-designer.component.css'],
 })
 export class MenuDesignerComponent implements OnInit {
@@ -25,11 +28,16 @@ export class MenuDesignerComponent implements OnInit {
 
   activeNode: MenuItem;
   form: FormGroup;
+  isLoading = false;
 
   hasChild = (_: number, node: MenuItem) =>
     !!node.items && node.items.length > 0;
 
-  constructor(private fb: FormBuilder, private firestore: AngularFirestore) {}
+  constructor(
+    private fb: FormBuilder,
+    private firestore: AngularFirestore,
+    private snackBar: MatSnackBar
+  ) {}
 
   ngOnInit() {
     this.thinking = true;
@@ -52,9 +60,11 @@ export class MenuDesignerComponent implements OnInit {
       }
     });
 
+    this.isLoading = true;
     this.firestore
       .collection('menu', (ref) => ref.where('tenantId', '==', 1))
       .get()
+      .pipe(finalize(() => (this.isLoading = false)))
       .subscribe((r) => {
         r.forEach((menu) => {
           this.dataSource.data = JSON.parse(menu.data().menuJson);
@@ -155,10 +165,11 @@ export class MenuDesignerComponent implements OnInit {
   remove(node: MenuItem) {
     var parent = this.findParent(node, this.dataSource.data, null) as MenuItem;
     if (parent) {
-      this.edit(parent);
       _.remove(parent.items, (x) => {
         return x.id == node.id;
       });
+      this.activeNode = null;
+      this.edit(parent);
     } else {
       _.remove(this.dataSource.data, (x) => {
         return x.id == node.id;
@@ -176,7 +187,15 @@ export class MenuDesignerComponent implements OnInit {
       .set(<Menu>{
         menuJson: JSON.stringify(this.dataSource.data),
         tenantId: 1,
-      });
+      })
+      .then(
+        (res) => {
+          this.snackBar.open('Menu', 'Saved', { duration: 2000 });
+        },
+        (err) => {
+          this.snackBar.open(err, 'Could not save menu', { duration: 2000 });
+        }
+      );
   }
 
   findParent(node: MenuItem, items: MenuItem[], parent: MenuItem): MenuItem {

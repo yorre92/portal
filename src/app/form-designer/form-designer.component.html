@@ -1,6 +1,74 @@
 <div class="container">
   <div class="box">
+    <div class="form-container">
+      <div class="box-four">
+        <button
+          mat-raised-button
+          style="width: 100%;"
+          type="button"
+          (click)="add()"
+        >
+          <mat-icon>add</mat-icon>
+        </button>
+      </div>
+      <div
+        (click)="select(i)"
+        [ngClass]="{ selected: activeIndex === i }"
+        [class]="e.width"
+        *ngFor="let e of elements; let i = index"
+        class="box border-box"
+      >
+        <div class="element-box">
+          <div style="width: 100%;">
+            <app-dynamic-element
+              aria-disabled="100%"
+              style="width: 100%; cursor: pointer;"
+              [element]="e"
+            ></app-dynamic-element>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="box">
+    <div
+      *ngIf="activeIndex === undefined"
+      class="border-box"
+      style="height: 400px;"
+      (click)="add()"
+    >
+      Add an element
+    </div>
     <div *ngIf="activeIndex !== undefined">
+      <div class="element-header">
+        <button
+          type="button"
+          mat-icon-button
+          (click)="moveDown(activeIndex)"
+          matTooltip="Flytta ner"
+        >
+          <mat-icon>arrow_downward</mat-icon>
+        </button>
+
+        <button
+          type="button"
+          mat-icon-button
+          (click)="moveUp(activeIndex)"
+          matTooltip="Flytta up"
+        >
+          <mat-icon>arrow_upward</mat-icon>
+        </button>
+
+        <button
+          color="warn"
+          mat-icon-button
+          type="button"
+          matTooltip="remove"
+          (click)="remove(activeIndex)"
+        >
+          <mat-icon>delete</mat-icon>
+        </button>
+      </div>
       <form action="" [formGroup]="form">
         <div></div>
 
@@ -97,59 +165,6 @@
           </div>
         </div>
       </form>
-    </div>
-  </div>
-  <div class="box">
-    <div class="form-container">
-      <div class="box border-box box-four">
-        <button mat-icon-button style="width: 100%;" (click)="add()">
-          <mat-icon>add</mat-icon>
-        </button>
-      </div>
-      <div
-        (click)="select(i)"
-        [ngClass]="{ selected: activeIndex === i }"
-        [class]="e.width"
-        *ngFor="let e of elements; let i = index"
-        class="box border-box"
-      >
-        <div class="element-box">
-          <div style="width: 100%;">
-            <app-dynamic-element
-              aria-disabled="100%"
-              style="width: 100%; cursor: pointer;"
-              [element]="e"
-            ></app-dynamic-element>
-          </div>
-
-          <div>
-            <div class="element-box">
-              <button
-                class="inline"
-                type="button"
-                mat-icon-button
-                (click)="moveUp(activeIndex)"
-              >
-                <mat-icon>arrow_circle_up</mat-icon>
-              </button>
-
-              <button
-                class="inline"
-                type="button"
-                mat-icon-button
-                (click)="moveDown(activeIndex)"
-              >
-                <mat-icon>arrow_circle_down</mat-icon>
-              </button>
-            </div>
-            <div>
-              <button mat-icon-button type="button" (click)="remove(i)">
-                <mat-icon>delete</mat-icon>
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
   </div>
 </div>

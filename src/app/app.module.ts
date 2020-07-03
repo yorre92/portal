@@ -20,7 +20,13 @@ import { MatTableModule } from '@angular/material/table';
 import { MatCardModule } from '@angular/material/card';
 import { MatTreeModule } from '@angular/material/tree';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { CdkTreeModule } from '@angular/cdk/tree';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatDialogModule } from '@angular/material/dialog';
+
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { DynamicElementComponent } from './dynamic-element/dynamic-element.component';
 import { MatNativeDateModule } from '@angular/material/core';
@@ -33,6 +39,11 @@ import { MenuComponent } from './menu/menu.component';
 import { MenuDesignerComponent } from './menu-designer/menu-designer.component';
 import { ThemeComponent } from './theme/theme.component';
 import { LanguageEditorComponent } from './language-editor/language-editor.component';
+import { WorkflowFormComponent } from './workflow-form/workflow-form.component';
+import { WorkflowListComponent } from './workflow-list/workflow-list.component';
+import { OrderServiceListComponent } from './order-service-list/order-service-list.component';
+import { OrderServiceFormComponent } from './order-service-form/order-service-form.component';
+import { OrderServiceDialogComponent } from './order-service-dialog/order-service-dialog.component';
 
 @NgModule({
   declarations: [
@@ -45,6 +56,11 @@ import { LanguageEditorComponent } from './language-editor/language-editor.compo
     MenuDesignerComponent,
     ThemeComponent,
     LanguageEditorComponent,
+    WorkflowFormComponent,
+    WorkflowListComponent,
+    OrderServiceListComponent,
+    OrderServiceFormComponent,
+    OrderServiceDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -68,6 +84,11 @@ import { LanguageEditorComponent } from './language-editor/language-editor.compo
     CdkTreeModule,
     MatTreeModule,
     MatMenuModule,
+    MatSnackBarModule,
+    MatTooltipModule,
+    MatChipsModule,
+    MatDialogModule,
+    MatProgressSpinnerModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
   ],
