@@ -1,1 +1,50 @@
-<p>workflow-list works!</p>
+<div @routerTransition>
+  <div class="list-header">
+    <h2>Workflows</h2>
+  </div>
+
+  <table *ngIf="!isLoading" class="list-table">
+    <thead>
+      <th align="left">Name</th>
+      <th align="left">Description</th>
+    </thead>
+    <tbody>
+      <tr *ngFor="let w of workflows" (click)="details(w)">
+        <td>{{ w.name }}</td>
+        <td>{{ w.description }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="spinner-container" *ngIf="isLoading">
+    <mat-spinner [diameter]="60"> </mat-spinner>
+  </div>
+
+  <div class="page-footer">
+    <div></div>
+    <div class="page-footer-box-center">
+      <button
+        [disabled]="currentPage === 1"
+        mat-icon-button
+        (click)="previous()"
+      >
+        <mat-icon>chevron_left</mat-icon>
+      </button>
+      <div>
+        {{ currentPage }}
+      </div>
+      <button
+        [disabled]="pageCount < pageSize"
+        mat-icon-button
+        (click)="next()"
+      >
+        <mat-icon>chevron_right</mat-icon>
+      </button>
+    </div>
+    <div class="page-footer-box-right">
+      <button mat-raised-button (click)="details(null)">
+        <mat-icon>add</mat-icon>
+      </button>
+    </div>
+  </div>
+</div>

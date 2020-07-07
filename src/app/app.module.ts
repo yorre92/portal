@@ -26,6 +26,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatStepperModule } from '@angular/material/stepper';
 
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { DynamicElementComponent } from './dynamic-element/dynamic-element.component';
@@ -44,6 +46,8 @@ import { WorkflowListComponent } from './workflow-list/workflow-list.component';
 import { OrderServiceListComponent } from './order-service-list/order-service-list.component';
 import { OrderServiceFormComponent } from './order-service-form/order-service-form.component';
 import { OrderServiceDialogComponent } from './order-service-dialog/order-service-dialog.component';
+import { ApiCallFormComponent } from './api-call-form/api-call-form.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -61,6 +65,7 @@ import { OrderServiceDialogComponent } from './order-service-dialog/order-servic
     OrderServiceListComponent,
     OrderServiceFormComponent,
     OrderServiceDialogComponent,
+    ApiCallFormComponent,
   ],
   imports: [
     BrowserModule,
@@ -88,6 +93,9 @@ import { OrderServiceDialogComponent } from './order-service-dialog/order-servic
     MatTooltipModule,
     MatChipsModule,
     MatDialogModule,
+    MatTabsModule,
+    MatStepperModule,
+    HttpClientModule,
     MatProgressSpinnerModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,

@@ -376,3 +376,53 @@ h4 {
   background: var(--bg);
   color: var(--text);
 }
+
+.mat-button.mat-primary,
+.mat-icon-button.mat-primary,
+.mat-stroked-button.mat-primary {
+  color: var(--primary);
+}
+
+.mat-tab-label,
+.mat-tab-link {
+  color: var(--text);
+}
+
+.mat-tab-group.mat-primary .mat-ink-bar,
+.mat-tab-nav-bar.mat-primary .mat-ink-bar {
+  background-color: var(--primary);
+}
+
+.mat-tab-nav-bar,
+.mat-tab-header {
+  border-bottom: 1px solid var(--bg-secondary);
+}
+
+.mat-stepper-horizontal,
+.mat-stepper-vertical {
+  background-color: var(--bg);
+}
+
+.mat-step-header .mat-step-icon-selected,
+.mat-step-header .mat-step-icon-state-done,
+.mat-step-header .mat-step-icon-state-edit {
+  background-color: var(--primary);
+  color: var(--text);
+}
+
+.mat-step-header .mat-step-label.mat-step-label-active {
+  color: var(--text);
+}
+
+.mat-step-header .mat-step-label,
+.mat-step-header .mat-step-optional {
+  color: var(--text);
+}
+
+.mat-form-field-appearance-legacy .mat-hint {
+  color: var(--text);
+}
+
+.mat-select-arrow {
+  color: var(--text);
+}

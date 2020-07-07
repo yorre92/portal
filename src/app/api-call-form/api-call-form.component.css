@@ -1,0 +1,12 @@
+.tab-body {
+  margin-top: 1rem;
+}
+
+.result-box {
+  border-radius: 5px;
+  padding: 1rem;
+  border: 2px solid var(--bg-secondary);
+  margin-top: 1rem;
+  max-height: 400px;
+  overflow: auto;
+}

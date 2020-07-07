@@ -7,6 +7,9 @@ import { ThemeComponent } from './theme/theme.component';
 import { ServiceFormComponent } from './service-form/service-form.component';
 import { MenuComponent } from './menu/menu.component';
 import { OrderServiceListComponent } from './order-service-list/order-service-list.component';
+import { ApiCallFormComponent } from './api-call-form/api-call-form.component';
+import { WorkflowFormComponent } from './workflow-form/workflow-form.component';
+import { WorkflowListComponent } from './workflow-list/workflow-list.component';
 
 const routes: Routes = [
   { path: 'form-designer', component: FormDesignerComponent },
@@ -15,6 +18,9 @@ const routes: Routes = [
   { path: 'menu-designer', component: MenuDesignerComponent },
   { path: 'theme', component: ThemeComponent },
   { path: 'order', component: OrderServiceListComponent },
+  { path: 'workflows', component: WorkflowListComponent },
+  { path: 'workflows/:id', component: WorkflowFormComponent },
+  { path: 'api-call-form', component: ApiCallFormComponent },
   { path: '', component: MenuComponent },
 ];
 

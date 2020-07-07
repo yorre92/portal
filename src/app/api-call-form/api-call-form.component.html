@@ -1,0 +1,118 @@
+<form [formGroup]="form">
+  <mat-form-field>
+    <mat-select required placeholder="Method" formControlName="method">
+      <mat-option *ngFor="let method of methodTypes" [value]="method">
+        {{ method }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field style="width: 60%;">
+    <input matInput required placeholder="Url" formControlName="url" />
+  </mat-form-field>
+  <button
+    [disabled]="form.invalid"
+    mat-raised-button
+    color="primary"
+    type="button"
+    (click)="test()"
+  >
+    Test <mat-icon>send</mat-icon>
+  </button>
+  <mat-tab-group>
+    <mat-tab label="Headers">
+      <div class="tab-body" formArrayName="headers">
+        <div
+          *ngFor="let header of headers.controls; let i = index"
+          [formGroupName]="i"
+        >
+          <mat-form-field>
+            <input matInput placeholder="Name" formControlName="name" />
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput placeholder="Value" formControlName="value" />
+          </mat-form-field>
+
+          <button
+            *ngIf="headers.length === i + 1"
+            mat-icon-button
+            color="primary"
+            type="button"
+            (click)="addHeader()"
+          >
+            <mat-icon>add</mat-icon>
+          </button>
+          <button
+            mat-icon-button
+            color="primary"
+            type="button"
+            (click)="deleteHeader(i)"
+          >
+            <mat-icon>remove</mat-icon>
+          </button>
+        </div>
+      </div>
+    </mat-tab>
+    <mat-tab label="Params">
+      <div class="tab-body" formArrayName="params">
+        <div
+          *ngFor="let param of params.controls; let i = index"
+          [formGroupName]="i"
+        >
+          <mat-form-field>
+            <input matInput placeholder="Name" formControlName="name" />
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput placeholder="Value" formControlName="value" />
+          </mat-form-field>
+
+          <button
+            *ngIf="params.length === i + 1"
+            mat-icon-button
+            color="primary"
+            type="button"
+            (click)="addParam()"
+          >
+            <mat-icon>add</mat-icon>
+          </button>
+          <button
+            mat-icon-button
+            color="primary"
+            type="button"
+            (click)="deleteParam(i)"
+          >
+            <mat-icon>remove</mat-icon>
+          </button>
+        </div>
+      </div>
+    </mat-tab>
+    <mat-tab label="Body">
+      <div class="tab-body">
+        <mat-form-field style="width: 100%;">
+          <textarea
+            matInput
+            placeholder="Body"
+            formControlName="body"
+          ></textarea>
+        </mat-form-field>
+      </div>
+    </mat-tab>
+  </mat-tab-group>
+
+  <div style="margin-top: 1rem;" *ngIf="result">
+    <label for="">Result</label>
+    <div class="result-box">
+      <pre>{{ result | json }}</pre>
+    </div>
+  </div>
+
+  <div style="margin-top: 1rem;">
+    <mat-form-field style="width: 50%;">
+      <input matInput placeholder="Store as" formControlName="resultVariable" />
+      <span matPrefix style="margin-right: 4px;">$</span>
+      <mat-hint
+        >Name of the varible. Where to store the result from the request. The
+        variable can be used in next steps</mat-hint
+      >
+    </mat-form-field>
+  </div>
+</form>
