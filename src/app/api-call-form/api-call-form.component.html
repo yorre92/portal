@@ -33,21 +33,22 @@
           </mat-form-field>
 
           <button
-            *ngIf="headers.length === i + 1"
-            mat-icon-button
-            color="primary"
-            type="button"
-            (click)="addHeader()"
-          >
-            <mat-icon>add</mat-icon>
-          </button>
-          <button
             mat-icon-button
             color="primary"
             type="button"
             (click)="deleteHeader(i)"
           >
             <mat-icon>remove</mat-icon>
+          </button>
+        </div>
+        <div class="add-button-wrapper">
+          <button
+            mat-icon-button
+            color="primary"
+            type="button"
+            (click)="addHeader()"
+          >
+            <mat-icon>add</mat-icon>
           </button>
         </div>
       </div>
@@ -66,21 +67,23 @@
           </mat-form-field>
 
           <button
-            *ngIf="params.length === i + 1"
-            mat-icon-button
-            color="primary"
-            type="button"
-            (click)="addParam()"
-          >
-            <mat-icon>add</mat-icon>
-          </button>
-          <button
             mat-icon-button
             color="primary"
             type="button"
             (click)="deleteParam(i)"
           >
             <mat-icon>remove</mat-icon>
+          </button>
+        </div>
+
+        <div class="add-button-wrapper">
+          <button
+            mat-icon-button
+            color="primary"
+            type="button"
+            (click)="addParam()"
+          >
+            <mat-icon>add</mat-icon>
           </button>
         </div>
       </div>
@@ -97,6 +100,7 @@
       </div>
     </mat-tab>
   </mat-tab-group>
+  <div></div>
 
   <div style="margin-top: 1rem;" *ngIf="result">
     <label for="">Result</label>

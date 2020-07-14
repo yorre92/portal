@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, AfterViewInit } from '@angular/core';
 import { FormGroup, FormBuilder, FormArray } from '@angular/forms';
 import {
   HttpClient,
@@ -12,7 +12,7 @@ import {
   templateUrl: './api-call-form.component.html',
   styleUrls: ['./api-call-form.component.css'],
 })
-export class ApiCallFormComponent implements OnInit {
+export class ApiCallFormComponent implements OnInit, AfterViewInit {
   methodTypes = ['POST', 'GET', 'PUT', 'DELETE', 'PATCH'];
   result;
   @Input('form') form: FormGroup;
@@ -20,19 +20,10 @@ export class ApiCallFormComponent implements OnInit {
   constructor(private fb: FormBuilder, private http: HttpClient) {}
 
   ngOnInit(): void {
-    // this.form = this.fb.group({
-    //   url: '',
-    //   headers: this.fb.array([]),
-    //   params: this.fb.array([]),
-    //   body: '',
-    //   method: '',
-    // });
-
     console.log(this.form);
-
-    this.addParam();
-    this.addHeader();
   }
+
+  ngAfterViewInit() {}
 
   get params() {
     return this.form.get('params') as FormArray;

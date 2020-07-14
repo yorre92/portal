@@ -14,13 +14,40 @@
     <h3>Steps</h3>
     <p>Design ur workflow.</p>
   </div>
-  <mat-vertical-stepper formArrayName="steps" [linear]="true" #stepper>
+  <mat-vertical-stepper
+    [selectedIndex]="selectedStep"
+    formArrayName="steps"
+    [linear]="false"
+    #stepper
+  >
     <mat-step
       [stepControl]="1"
       *ngFor="let s of steps.controls; let i = index"
       [formGroupName]="i"
     >
-      <ng-template matStepLabel>{{ s.controls.type.value }}</ng-template>
+      <ng-template matStepLabel>
+        <div
+          style="
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+          "
+        >
+          {{ s.controls.type.value ? s.controls.type.value : "choose a type" }}
+          <button
+            mat-icon-button
+            type="button"
+            color="warn"
+            matTooltip="delete step"
+            (click)="deleteStep(i)"
+          >
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
+      </ng-template>
+
+      <input type="text" hidden formControlName="id" />
+
       <mat-form-field>
         <mat-select required placeholder="Type" formControlName="type">
           <mat-option *ngFor="let step of stepTypes" [value]="step.value">
@@ -37,9 +64,17 @@
       </div>
     </mat-step>
   </mat-vertical-stepper>
-
-  <div></div>
+  <div matTooltip="add another step" class="add-button-wrapper">
+    <button
+      mat-icon-button
+      type="button"
+      (click)="addStep({}, null)"
+      color="primary"
+    >
+      <mat-icon>add</mat-icon>
+    </button>
+  </div>
 </form>
 <button mat-raised-button [disabled]="form.invalid" (click)="save()">
-  save
+  {{ id ? "Save" : "Create" }}
 </button>

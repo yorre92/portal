@@ -16,4 +16,6 @@ export class DataService {
   updateService() {}
 
   deleteService() {}
+
+  listWorkflows() {}
 }
