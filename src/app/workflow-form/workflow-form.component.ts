@@ -184,9 +184,10 @@ export class WorkflowFormComponent implements OnInit {
               );
             }
           });
-          Promise.all(promises).then(() =>
-            this.snackBar.open('Workflow', 'Created', { duration: 2000 })
-          );
+          Promise.all(promises).then(() => {
+            this.snackBar.open('Workflow', 'Created', { duration: 2000 });
+            this.router.navigate(['workflows']);
+          });
         });
     }
   }

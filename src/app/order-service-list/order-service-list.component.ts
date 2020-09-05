@@ -47,11 +47,22 @@ export class OrderServiceListComponent implements OnInit {
       width: '800px',
     });
 
-    dialogRef.afterClosed().subscribe((res) => {
-      if (res)
-        this.snackBar.open(service.name, 'Ordered', <MatSnackBarConfig>{
-          duration: 2000,
-        });
+    dialogRef.afterClosed().subscribe((input) => {
+      if (input) {
+        this.firestore
+          .collection<CreateOrder>('orders')
+          .add({
+            input: input,
+            createdAt: new Date().toString(),
+            orderedBy: 'carl',
+            serviceId: service.id,
+          })
+          .then((res) => {
+            this.snackBar.open(service.name, 'Ordered', <MatSnackBarConfig>{
+              duration: 2000,
+            });
+          });
+      }
     });
   }
 
@@ -114,4 +125,11 @@ export class OrderServiceListComponent implements OnInit {
     this.getServices(this.currentPage - 1);
     this.currentPage -= 1;
   }
+}
+
+export interface CreateOrder {
+  input: string;
+  createdAt: string;
+  orderedBy: string;
+  serviceId: string;
 }

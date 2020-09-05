@@ -28,4 +28,12 @@ export class OrderServiceDialogComponent implements OnInit {
   updateFormState(state: string) {
     this.state = state;
   }
+
+  send() {
+    const input = this.elements.map((x) => {
+      return { name: x.parameterName, value: x.value };
+    });
+
+    this.dialogRef.close(input);
+  }
 }

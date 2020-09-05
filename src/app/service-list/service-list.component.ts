@@ -114,4 +114,5 @@ export interface Service {
   tags: string[];
   tenantId: number;
   thumbnail: string;
+  workflowId: string;
 }

@@ -12,9 +12,9 @@
   <button
     mat-raised-button
     color="primary"
-    [mat-dialog-close]="true"
     [disabled]="!state || state === 'INVALID'"
     cdkFocusInitial
+    (click)="send()"
   >
     Order
   </button>
