@@ -81,7 +81,71 @@ export class DataService {
       );
   }
 
-  listWorkflows() {}
+  listWorkflows(skipCount, maxResultCount) {
+    let params = new HttpParams();
+    params = params.append('SkipCount', skipCount);
+    params = params.append('maxResultCount', maxResultCount);
+
+    return this.http
+      .get(`${this.baseUrl}/api/services/app/Workflow/GetAll`, {
+        params: params,
+      })
+      .pipe(
+        map((res: SingleResult) => {
+          return res.result as PagedResult;
+        })
+      );
+  }
+
+  getWorkflow(id) {
+    let params = new HttpParams();
+    params = params.append('Id', id);
+
+    return this.http
+      .get(`${this.baseUrl}/api/services/app/Workflow/Get`, {
+        params: params,
+      })
+      .pipe(
+        map((res: SingleResult) => {
+          return res.result;
+        })
+      );
+  }
+
+  createWorkflow(workflow) {
+    return this.http
+      .post(`${this.baseUrl}/api/services/app/Workflow/Create`, workflow)
+      .pipe(
+        map((res: SingleResult) => {
+          return res.result;
+        })
+      );
+  }
+
+  updateWorkflow(workflow) {
+    return this.http
+      .put(`${this.baseUrl}/api/services/app/Workflow/Update`, workflow)
+      .pipe(
+        map((res: SingleResult) => {
+          return res.result;
+        })
+      );
+  }
+
+  deleteWorkflow(id) {
+    let params = new HttpParams();
+    params = params.append('Id', id);
+
+    return this.http
+      .delete(`${this.baseUrl}/api/services/app/Workflow/Delete`, {
+        params: params,
+      })
+      .pipe(
+        map((res: SingleResult) => {
+          return res.result;
+        })
+      );
+  }
 
   getMenu() {
     return this.http

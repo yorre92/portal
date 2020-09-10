@@ -6,7 +6,7 @@
       </mat-option>
     </mat-select>
   </mat-form-field>
-  <mat-form-field style="width: 60%;">
+  <mat-form-field style="width: 60%">
     <input matInput required placeholder="Url" formControlName="url" />
   </mat-form-field>
   <button
@@ -90,11 +90,12 @@
     </mat-tab>
     <mat-tab label="Body">
       <div class="tab-body">
-        <mat-form-field style="width: 100%;">
+        <mat-form-field style="width: 100%">
           <textarea
             matInput
             placeholder="Body"
             formControlName="body"
+            rows="7"
           ></textarea>
         </mat-form-field>
       </div>
@@ -102,17 +103,17 @@
   </mat-tab-group>
   <div></div>
 
-  <div style="margin-top: 1rem;" *ngIf="result">
+  <div style="margin-top: 1rem" *ngIf="result">
     <label for="">Result</label>
     <div class="result-box">
       <pre>{{ result | json }}</pre>
     </div>
   </div>
 
-  <div style="margin-top: 1rem;">
-    <mat-form-field style="width: 50%;">
+  <div style="margin-top: 1rem">
+    <mat-form-field style="width: 50%">
       <input matInput placeholder="Store as" formControlName="resultVariable" />
-      <span matPrefix style="margin-right: 4px;">$</span>
+      <span matPrefix style="margin-right: 4px">$</span>
       <mat-hint
         >Name of the varible. Where to store the result from the request. The
         variable can be used in next steps</mat-hint

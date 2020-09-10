@@ -93,11 +93,11 @@ export class ServiceFormComponent implements OnInit {
 
     if (this.id) {
       this.dataService.updateService(service).subscribe((res) => {
-        this.snackBar.open('Menu', 'Saved', { duration: 2000 });
+        this.snackBar.open('Service', 'Saved', { duration: 2000 });
       });
     } else {
       this.dataService.createService(service).subscribe((res) => {
-        this.snackBar.open('Menu', 'Created', { duration: 2000 });
+        this.snackBar.open('Service', 'Created', { duration: 2000 });
         this.router.navigate(['services']);
       });
     }

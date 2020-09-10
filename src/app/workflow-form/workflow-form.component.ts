@@ -6,6 +6,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { DataService } from '../services/data.service';
 
 @Component({
   selector: 'app-workflow-form',
@@ -27,6 +28,7 @@ export class WorkflowFormComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private firestore: AngularFirestore,
+    private dataService: DataService,
     private fb: FormBuilder,
     private snackBar: MatSnackBar
   ) {}
@@ -41,43 +43,21 @@ export class WorkflowFormComponent implements OnInit {
     this.route.params.subscribe((res) => {
       this.id = res['id'];
       if (this.id) {
-        let query = this.firestore.collection('workflows').doc(this.id);
-
-        query.get().subscribe((snapshot) => {
-          let workflow = snapshot.data();
+        this.dataService.getWorkflow(this.id).subscribe((res) => {
+          let workflow = res;
           this.form.patchValue({
             name: workflow.name,
             description: workflow.description,
           });
-          console.log(workflow);
-        });
 
-        this.firestore
-          .collection('workflowSteps', (ref) =>
-            ref.where('workflowId', '==', this.id)
-          )
-          .get()
-          .pipe(
-            map((querySnapshot) => {
-              let steps = [];
+          if (workflow.steps) {
+            workflow.steps.forEach((step) => {
+              if (step.request) step.request = JSON.parse(step.request);
 
-              querySnapshot.forEach((doc) => {
-                let step = doc.data();
-
-                if (step.request) step.request = JSON.parse(step.request);
-                step.id = doc.id;
-                steps.push(step);
-              });
-
-              return steps;
-            })
-          )
-          .subscribe((steps) => {
-            console.log(steps);
-            steps.forEach((step) => {
               this.addStep(step, step.request);
             });
-          });
+          }
+        });
       }
     });
   }
@@ -129,66 +109,24 @@ export class WorkflowFormComponent implements OnInit {
   }
 
   save() {
-    console.log(this.form.value);
+    let workflow = this.form.value;
+
+    workflow.steps.forEach((step) => {
+      if (step.request) step.request = JSON.stringify(step.request);
+    });
     let promises: Promise<any>[] = [];
 
     if (this.id) {
-      promises.push(
-        this.firestore
-          .collection('workflows')
-          .doc(this.id)
-          .set({
-            name: this.form.get('name').value,
-            description: this.form.get('description').value,
-          })
-      );
+      workflow.id = this.id;
 
-      this.steps.value.forEach((step) => {
-        step.request = JSON.stringify(step.request);
-        step.workflowId = this.id;
-
-        if (step.id) {
-          promises.push(
-            this.firestore.collection('workflowSteps').doc(step.id).set(step)
-          );
-        } else {
-          promises.push(this.firestore.collection('workflowSteps').add(step));
-        }
+      this.dataService.updateWorkflow(workflow).subscribe((res) => {
+        this.snackBar.open('Workflow', 'Updated', { duration: 2000 });
       });
-
-      Promise.all(promises).then(() =>
-        this.snackBar.open('Workflow', 'Saved', { duration: 2000 })
-      );
     } else {
-      this.firestore
-        .collection('workflows')
-        .add({
-          name: this.form.get('name').value,
-          description: this.form.get('description').value,
-        })
-        .then((res) => {
-          this.steps.value.forEach((step) => {
-            step.request = JSON.stringify(step.request);
-            step.workflowId = res.id;
-
-            if (step.id) {
-              promises.push(
-                this.firestore
-                  .collection('workflowSteps')
-                  .doc(step.id)
-                  .set(step)
-              );
-            } else {
-              promises.push(
-                this.firestore.collection('workflowSteps').add(step)
-              );
-            }
-          });
-          Promise.all(promises).then(() => {
-            this.snackBar.open('Workflow', 'Created', { duration: 2000 });
-            this.router.navigate(['workflows']);
-          });
-        });
+      this.dataService.createWorkflow(workflow).subscribe((res) => {
+        this.snackBar.open('Workflow', 'Created', { duration: 2000 });
+        this.router.navigate(['workflows']);
+      });
     }
   }
 }

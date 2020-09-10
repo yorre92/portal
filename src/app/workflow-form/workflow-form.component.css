@@ -10,3 +10,7 @@
 .mat-step-label {
   width: 100% !important;
 }
+
+.mat-stepper-vertical {
+  max-width: 1000px;
+}
