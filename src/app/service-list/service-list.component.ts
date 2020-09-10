@@ -10,6 +10,7 @@ import { nextTick } from 'process';
 import { Router } from '@angular/router';
 import { slideFromBottom } from '../animations/animations';
 import { finalize } from 'rxjs/operators';
+import { DataService } from '../services/data.service';
 
 @Component({
   selector: 'app-service-list',
@@ -30,10 +31,10 @@ export class ServiceListComponent implements OnInit {
   isLoading = false;
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
-  constructor(private firestore: AngularFirestore, private router: Router) {}
+  constructor(private router: Router, private dataService: DataService) {}
 
   ngOnInit(): void {
-    this.getServices(this.currentPage);
+    this.getServices(0);
   }
 
   details(s: Service) {
@@ -42,51 +43,16 @@ export class ServiceListComponent implements OnInit {
   }
 
   getServices(page) {
-    let query: AngularFirestoreCollection<Service> = null;
-    this.isLoading = true;
+    const skipCount = page * this.pageSize;
+    const maxResultCount = this.pageSize;
 
-    if (page === 1) {
-      query = this.firestore.collection<Service>('services', (ref) =>
-        ref.orderBy(this.orderBy).limit(this.pageSize)
-      );
-    } else if (this.direction === 'right' && this.totalCount <= this.pageSize) {
-      query = this.firestore.collection<Service>('services', (ref) =>
-        ref
-          .orderBy(this.orderBy)
-          .startAfter(this.lastVisible)
-          .limit(this.pageSize)
-      );
-    } else if (this.direction === 'left' && page > 1) {
-      query = this.firestore.collection<Service>('services', (ref) =>
-        ref
-          .orderBy(this.orderBy)
-          .endBefore(this.firstVisible)
-          .limitToLast(this.pageSize)
-      );
-    }
-
-    query
-      .get()
-      .pipe(finalize(() => (this.isLoading = false)))
-      .subscribe((querySnapshot) => {
-        this.lastVisible = querySnapshot.docs[querySnapshot.docs.length - 1];
-        this.firstVisible = querySnapshot.docs[0];
-
-        this.totalCount = querySnapshot.size;
-        let data = [];
-
-        querySnapshot.forEach((doc) => {
-          let service = doc.data();
-          service.id = doc.id;
-          data.push(service);
-
-          this.services = data;
-        });
-      });
+    this.dataService.listServices(page, maxResultCount).subscribe((res) => {
+      this.totalCount = res.totalCount;
+      this.services = res.items;
+    });
   }
 
   next() {
-    this.direction = 'right';
     this.getServices(this.currentPage + 1);
     this.currentPage += 1;
   }
@@ -96,7 +62,6 @@ export class ServiceListComponent implements OnInit {
       return;
     }
 
-    this.direction = 'left';
     this.getServices(this.currentPage - 1);
     this.currentPage -= 1;
   }

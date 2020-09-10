@@ -47,7 +47,9 @@ import { OrderServiceListComponent } from './order-service-list/order-service-li
 import { OrderServiceFormComponent } from './order-service-form/order-service-form.component';
 import { OrderServiceDialogComponent } from './order-service-dialog/order-service-dialog.component';
 import { ApiCallFormComponent } from './api-call-form/api-call-form.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { CookieService } from 'ngx-cookie-service';
+import { AuthInterceptor } from './interceptors/http-interceptor';
 
 @NgModule({
   declarations: [
@@ -119,7 +121,14 @@ import { HttpClientModule } from '@angular/common/http';
     MatTreeModule,
     MatMenuModule,
   ],
-  providers: [],
+  providers: [
+    CookieService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true,
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

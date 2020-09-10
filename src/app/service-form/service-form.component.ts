@@ -5,6 +5,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { slideFromBottom } from '../animations/animations';
 import { Service } from '../service-list/service-list.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { DataService } from '../services/data.service';
 
 @Component({
   selector: 'app-service-form',
@@ -22,7 +23,7 @@ export class ServiceFormComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private firestore: AngularFirestore,
+    private dataService: DataService,
     private fb: FormBuilder,
     private snackBar: MatSnackBar
   ) {}
@@ -44,18 +45,14 @@ export class ServiceFormComponent implements OnInit {
     this.route.params.subscribe((res) => {
       this.id = res['id'];
       if (this.id) {
-        this.firestore
-          .collection('services')
-          .doc(this.id)
-          .get()
-          .subscribe((snapshot) => {
-            this.service = snapshot.data();
-            this.form.patchValue(this.service);
+        this.dataService.getService(this.id).subscribe((res) => {
+          this.service = res;
+          this.form.patchValue(this.service);
 
-            if (this.service.elements)
-              this.elements = JSON.parse(this.service.elements);
-            else this.elements = [];
-          });
+          if (this.service.elements)
+            this.elements = JSON.parse(this.service.elements);
+          else this.elements = [];
+        });
       } else {
         this.elements = [];
       }
@@ -95,19 +92,14 @@ export class ServiceFormComponent implements OnInit {
     service.elements = JSON.stringify(this.elements);
 
     if (this.id) {
-      this.firestore
-        .collection('services')
-        .doc(this.id)
-        .set(service)
-        .then((res) => this.snackBar.open('Menu', 'Saved', { duration: 2000 }));
+      this.dataService.updateService(service).subscribe((res) => {
+        this.snackBar.open('Menu', 'Saved', { duration: 2000 });
+      });
     } else {
-      this.firestore
-        .collection('services')
-        .add(service)
-        .then((res) => {
-          this.snackBar.open('Menu', 'Created', { duration: 2000 });
-          this.router.navigate(['services']);
-        });
+      this.dataService.createService(service).subscribe((res) => {
+        this.snackBar.open('Menu', 'Created', { duration: 2000 });
+        this.router.navigate(['services']);
+      });
     }
   }
 }

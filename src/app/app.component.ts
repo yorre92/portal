@@ -1,12 +1,13 @@
-import { Component, AfterViewInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MenuItem } from './Models/MenuItem';
+import { AuthService } from './services/auth.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'portal';
 
   menu: MenuItem[] = [
@@ -33,7 +34,11 @@ export class AppComponent {
     },
   ];
 
-  constructor() {}
+  constructor(private authService: AuthService) {}
+
+  ngOnInit(): void {
+    this.authService.authenticate('admin', '123qwe').subscribe((res) => {});
+  }
 
   openDropdown(item) {
     item.openDropdown = true;

@@ -14,6 +14,7 @@ import { from } from 'rxjs';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { slideFromBottom } from '../animations/animations';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { DataService } from '../services/data.service';
 
 @Component({
   selector: 'app-menu-designer',
@@ -35,7 +36,7 @@ export class MenuDesignerComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private firestore: AngularFirestore,
+    private dataService: DataService,
     private snackBar: MatSnackBar
   ) {}
 
@@ -61,14 +62,12 @@ export class MenuDesignerComponent implements OnInit {
     });
 
     this.isLoading = true;
-    this.firestore
-      .collection('menu', (ref) => ref.where('tenantId', '==', 1))
-      .get()
+
+    this.dataService
+      .getMenu()
       .pipe(finalize(() => (this.isLoading = false)))
-      .subscribe((r) => {
-        r.forEach((menu) => {
-          this.dataSource.data = JSON.parse(menu.data().menuJson);
-        });
+      .subscribe((res) => {
+        this.dataSource.data = res.menu;
       });
   }
 
@@ -181,21 +180,14 @@ export class MenuDesignerComponent implements OnInit {
   }
 
   save() {
-    this.firestore
-      .collection('menu')
-      .doc('hlyGtsqeOFLfQbKpZRec')
-      .set(<Menu>{
-        menuJson: JSON.stringify(this.dataSource.data),
-        tenantId: 1,
-      })
-      .then(
-        (res) => {
-          this.snackBar.open('Menu', 'Saved', { duration: 2000 });
-        },
-        (err) => {
-          this.snackBar.open(err, 'Could not save menu', { duration: 2000 });
-        }
-      );
+    this.dataService.setMenu(this.dataSource.data).subscribe(
+      (res) => {
+        this.snackBar.open('Menu', 'Saved', { duration: 2000 });
+      },
+      (error: any) => {
+        this.snackBar.open(error, 'Could not save menu', { duration: 2000 });
+      }
+    );
   }
 
   findParent(node: MenuItem, items: MenuItem[], parent: MenuItem): MenuItem {

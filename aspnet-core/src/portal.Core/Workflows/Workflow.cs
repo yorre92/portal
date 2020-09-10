@@ -1,10 +1,11 @@
+using Abp.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace portal.Workflows
 {
-  public class Workflow
+  public class Workflow : Entity
   {
     public string Name { get; set; }
 

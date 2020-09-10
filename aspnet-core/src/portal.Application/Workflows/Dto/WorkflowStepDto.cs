@@ -1,11 +1,13 @@
-using Abp.Domain.Entities;
+using Abp.AutoMapper;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace portal.Workflows
+namespace portal.Workflows.Dto
 {
-  public class WorkflowStep : Entity
+  [AutoMap(typeof(WorkflowStep))]
+
+  public class WorkflowStepDto
   {
     public string Name { get; set; }
 
@@ -14,7 +16,5 @@ namespace portal.Workflows
     public string Type { get; set; }
 
     public string Request { get; set; }
-
-    public int WorkflowId { get; set; }
   }
 }

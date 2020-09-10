@@ -27,7 +27,7 @@ namespace portal
       portalLocalizationConfigurer.Configure(Configuration.Localization);
 
       // Enable this line to create a multi-tenant application.
-      Configuration.MultiTenancy.IsEnabled = portalConsts.MultiTenancyEnabled;
+      Configuration.MultiTenancy.IsEnabled = true;
 
       // Configure roles
       AppRoleConfig.Configure(Configuration.Modules.Zero().RoleManagement);

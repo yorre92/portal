@@ -18,11 +18,11 @@ namespace portal.Configuration
 
     public async Task<MenuDto> GetMenu()
     {
-      var menu = await SettingManager.GetSettingValueAsync("Menu");
+      var menu = await SettingManager.GetSettingValueForTenantAsync(AppSettingNames.Menu, AbpSession.TenantId.Value);
 
       if (menu.IsNullOrWhiteSpace())
       {
-        throw new UserFriendlyException("No menu found");
+        return new MenuDto() { Menu = new object[] { } };
       }
 
       return new MenuDto() { Menu = JsonConvert.DeserializeObject(menu) };
@@ -30,7 +30,7 @@ namespace portal.Configuration
 
     public async Task UpdateMenu(MenuDto menu)
     {
-      await SettingManager.ChangeSettingForTenantAsync(AbpSession.TenantId.Value, "Menu", JsonConvert.SerializeObject(menu.Menu));
+      await SettingManager.ChangeSettingForTenantAsync(AbpSession.TenantId.Value, AppSettingNames.Menu, JsonConvert.SerializeObject(menu.Menu));
     }
   }
 }
