@@ -6,6 +6,7 @@ import { slideFromBottom } from '../animations/animations';
 import { Service } from '../service-list/service-list.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { DataService } from '../services/data.service';
+import { Workflow } from '../workflow-list/workflow-list.component';
 
 @Component({
   selector: 'app-service-form',
@@ -19,6 +20,7 @@ export class ServiceFormComponent implements OnInit {
   form: FormGroup;
   elements: any[];
   tag;
+  workflows: Workflow[];
 
   constructor(
     private route: ActivatedRoute,
@@ -40,6 +42,7 @@ export class ServiceFormComponent implements OnInit {
       tags: [],
       tenantId: 0,
       thumbnail: '',
+      workflowId: 0,
     });
 
     this.route.params.subscribe((res) => {
@@ -56,6 +59,10 @@ export class ServiceFormComponent implements OnInit {
       } else {
         this.elements = [];
       }
+    });
+
+    this.dataService.listWorkflows(0, 1000).subscribe((res) => {
+      this.workflows = res.items;
     });
   }
 
@@ -92,6 +99,7 @@ export class ServiceFormComponent implements OnInit {
     service.elements = JSON.stringify(this.elements);
 
     if (this.id) {
+      service.id = this.id;
       this.dataService.updateService(service).subscribe((res) => {
         this.snackBar.open('Service', 'Saved', { duration: 2000 });
       });

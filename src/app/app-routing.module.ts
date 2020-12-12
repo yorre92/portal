@@ -12,7 +12,6 @@ import { WorkflowFormComponent } from './workflow-form/workflow-form.component';
 import { WorkflowListComponent } from './workflow-list/workflow-list.component';
 
 const routes: Routes = [
-  { path: 'form-designer', component: FormDesignerComponent },
   { path: 'services', component: ServiceListComponent },
   { path: 'services/:id', component: ServiceFormComponent },
   { path: 'menu-designer', component: MenuDesignerComponent },

@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using portal.EntityFrameworkCore;
 
 namespace portal.Migrations
 {
     [DbContext(typeof(portalDbContext))]
-    partial class portalDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200911100348_Workflowjson")]
+    partial class Workflowjson
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1588,6 +1590,9 @@ namespace portal.Migrations
                     b.Property<int>("ServiceId")
                         .HasColumnType("int");
 
+                    b.Property<string>("WorkflowJson")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
                     b.ToTable("Orders");
@@ -1614,50 +1619,6 @@ namespace portal.Migrations
                     b.HasIndex("OrderId");
 
                     b.ToTable("OrderInput");
-                });
-
-            modelBuilder.Entity("portal.Requests.Request", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("OrderId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Step")
-                        .HasColumnType("int");
-
-                    b.Property<string>("WorkflowJson")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Request");
-                });
-
-            modelBuilder.Entity("portal.Requests.RequestInput", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("RequestId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Value")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("RequestId");
-
-                    b.ToTable("RequestInputs");
                 });
 
             modelBuilder.Entity("portal.Services.Service", b =>
@@ -1966,15 +1927,6 @@ namespace portal.Migrations
                     b.HasOne("portal.Orders.Order", null)
                         .WithMany("Input")
                         .HasForeignKey("OrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("portal.Requests.RequestInput", b =>
-                {
-                    b.HasOne("portal.Requests.Request", null)
-                        .WithMany("Input")
-                        .HasForeignKey("RequestId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

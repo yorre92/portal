@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using portal.EntityFrameworkCore;
 
 namespace portal.Migrations
 {
     [DbContext(typeof(portalDbContext))]
-    partial class portalDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200912171654_RequestInputInt")]
+    partial class RequestInputInt
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1657,7 +1659,7 @@ namespace portal.Migrations
 
                     b.HasIndex("RequestId");
 
-                    b.ToTable("RequestInputs");
+                    b.ToTable("RequestInput");
                 });
 
             modelBuilder.Entity("portal.Services.Service", b =>

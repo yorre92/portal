@@ -42,7 +42,7 @@
       <button mat-icon-button type="button" (click)="addTag()">
         <mat-icon>add</mat-icon>
       </button>
-      <div style="padding-left: 8px;">
+      <div style="padding-left: 8px">
         <mat-chip-list>
           <mat-chip
             *ngFor="let t of tags.value; let i = index"
@@ -55,6 +55,20 @@
           >
         </mat-chip-list>
       </div>
+    </div>
+
+    <div style="margin-top: 10px">
+      <mat-form-field>
+        <mat-select
+          placeholder="Workflow"
+          formControlName="workflowId"
+          name="Workflow"
+        >
+          <mat-option *ngFor="let workflow of workflows" [value]="workflow.id">
+            {{ workflow.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
     </div>
 
     <div class="page-header">

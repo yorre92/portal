@@ -6,6 +6,7 @@ using portal.MultiTenancy;
 using portal.Services;
 using portal.Orders;
 using portal.Workflows;
+using portal.Requests;
 
 namespace portal.EntityFrameworkCore
 {
@@ -20,6 +21,10 @@ namespace portal.EntityFrameworkCore
     public DbSet<Workflow> Workflows { get; set; }
 
     public DbSet<WorkflowStep> WorkflowSteps { get; set; }
+
+    public DbSet<Request> Request { get; set; }
+
+    public DbSet<RequestInput> RequestInputs { get; set; }
 
     public portalDbContext(DbContextOptions<portalDbContext> options)
             : base(options)

@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using portal.EntityFrameworkCore;
 
 namespace portal.Migrations
 {
     [DbContext(typeof(portalDbContext))]
-    partial class portalDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200912171425_RequestInput")]
+    partial class RequestInput
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1647,7 +1649,10 @@ namespace portal.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("RequestId")
+                    b.Property<string>("RequestId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("RequestId1")
                         .HasColumnType("int");
 
                     b.Property<string>("Value")
@@ -1655,9 +1660,9 @@ namespace portal.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("RequestId");
+                    b.HasIndex("RequestId1");
 
-                    b.ToTable("RequestInputs");
+                    b.ToTable("RequestInput");
                 });
 
             modelBuilder.Entity("portal.Services.Service", b =>
@@ -1974,9 +1979,7 @@ namespace portal.Migrations
                 {
                     b.HasOne("portal.Requests.Request", null)
                         .WithMany("Input")
-                        .HasForeignKey("RequestId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("RequestId1");
                 });
 
             modelBuilder.Entity("portal.Workflows.WorkflowStep", b =>

@@ -12,7 +12,6 @@ namespace portal.Orders.Dto
     public DateTime CreationTime { get; set; }
 
     public int ServiceId { get; set; }
-
     public IEnumerable<OrderInputDto> Input { get; set; }
   }
 }

@@ -27,7 +27,6 @@ export class AppComponent implements OnInit {
       children: [
         { name: 'Services', link: '/services', children: null },
         { name: 'Workflows', link: '/workflows', children: null },
-        { name: 'Forms', link: '/form-designer', children: null },
         { name: 'Menu', link: '/menu-designer', children: null },
         { name: 'Theme', link: '/theme', children: null },
       ],

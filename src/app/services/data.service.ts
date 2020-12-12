@@ -147,6 +147,16 @@ export class DataService {
       );
   }
 
+  createOrder(order) {
+    return this.http
+      .post(`${this.baseUrl}/api/services/app/Order/Create`, order)
+      .pipe(
+        map((res: SingleResult) => {
+          return res.result;
+        })
+      );
+  }
+
   getMenu() {
     return this.http
       .get(`${this.baseUrl}/api/services/app/Configuration/GetMenu`)

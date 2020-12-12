@@ -13,6 +13,7 @@ import {
   MatSnackBar,
   MatSnackBarConfig,
 } from '@angular/material/snack-bar';
+import { DataService } from '../services/data.service';
 
 @Component({
   selector: 'app-order-service-list',
@@ -32,13 +33,13 @@ export class OrderServiceListComponent implements OnInit {
   currentPage = 1;
 
   constructor(
-    private firestore: AngularFirestore,
+    private dataService: DataService,
     private dialog: MatDialog,
     private snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
-    this.getServices(1);
+    this.getServices(0);
   }
 
   openDialog(service: Service) {
@@ -49,69 +50,45 @@ export class OrderServiceListComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((input) => {
       if (input) {
-        this.firestore
-          .collection<CreateOrder>('orders')
-          .add({
+        this.dataService
+          .createOrder({
             input: input,
-            createdAt: new Date().toString(),
-            orderedBy: 'carl',
+            workflowJson: '',
             serviceId: service.id,
           })
-          .then((res) => {
+          .subscribe((res) => {
             this.snackBar.open(service.name, 'Ordered', <MatSnackBarConfig>{
               duration: 2000,
             });
           });
+
+        // this.data{
+        //     input: input,
+        //     createdAt: new Date().toString(),
+        //     orderedBy: 'carl',
+        //     workflowJson: '',
+        //     serviceId: service.id,
+        //   })
+        //   .then((res) => {
+        //     this.snackBar.open(service.name, 'Ordered', <MatSnackBarConfig>{
+        //       duration: 2000,
+        //     });
+        //   });
       }
     });
   }
 
   getServices(page) {
-    let query: AngularFirestoreCollection<Service> = null;
-    this.isLoading = true;
+    const skipCount = page * this.pageSize;
+    const maxResultCount = this.pageSize;
 
-    if (page === 1) {
-      query = this.firestore.collection<Service>('services', (ref) =>
-        ref.orderBy(this.orderBy).limit(this.pageSize)
-      );
-    } else if (this.direction === 'right' && this.totalCount <= this.pageSize) {
-      query = this.firestore.collection<Service>('services', (ref) =>
-        ref
-          .orderBy(this.orderBy)
-          .startAfter(this.lastVisible)
-          .limit(this.pageSize)
-      );
-    } else if (this.direction === 'left' && page > 1) {
-      query = this.firestore.collection<Service>('services', (ref) =>
-        ref
-          .orderBy(this.orderBy)
-          .endBefore(this.firstVisible)
-          .limitToLast(this.pageSize)
-      );
-    }
-
-    query
-      .get()
-      .pipe(finalize(() => (this.isLoading = false)))
-      .subscribe((querySnapshot) => {
-        this.lastVisible = querySnapshot.docs[querySnapshot.docs.length - 1];
-        this.firstVisible = querySnapshot.docs[0];
-
-        this.totalCount = querySnapshot.size;
-        let data = [];
-
-        querySnapshot.forEach((doc) => {
-          let service = doc.data();
-          service.id = doc.id;
-          data.push(service);
-
-          this.services = data;
-        });
-      });
+    this.dataService.listServices(page, maxResultCount).subscribe((res) => {
+      this.totalCount = res.totalCount;
+      this.services = res.items;
+    });
   }
 
   next() {
-    this.direction = 'right';
     this.getServices(this.currentPage + 1);
     this.currentPage += 1;
   }
@@ -121,7 +98,6 @@ export class OrderServiceListComponent implements OnInit {
       return;
     }
 
-    this.direction = 'left';
     this.getServices(this.currentPage - 1);
     this.currentPage -= 1;
   }
@@ -129,7 +105,6 @@ export class OrderServiceListComponent implements OnInit {
 
 export interface CreateOrder {
   input: string;
-  createdAt: string;
-  orderedBy: string;
+  workflowJson: string;
   serviceId: string;
 }

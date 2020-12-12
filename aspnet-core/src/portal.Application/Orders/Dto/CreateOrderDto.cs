@@ -10,7 +10,6 @@ namespace portal.Orders.Dto
   public class CreateOrderDto
   {
     public int ServiceId { get; set; }
-
     public IEnumerable<OrderInputDto> Input { get; set; }
   }
 }
